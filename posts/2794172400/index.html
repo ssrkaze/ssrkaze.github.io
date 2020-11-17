@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ssrkaze.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="一些说明 翻译自 Standard ECMA-262, 5.1 Edition, ECMAScript® Language Specification 翻译自 Standard ECMA-262, 6th Edition, ECMAScript® 2015 Language Specification 部分术语的翻译参考自 术语在线、ECMAScript® 语言规范中文翻译工作中英词汇对照表，部分">
+<meta property="og:type" content="article">
+<meta property="og:title" content="散装自译ECMA262">
+<meta property="og:url" content="https://ssrkaze.github.io/posts/2794172400/">
+<meta property="og:site_name" content="自留地">
+<meta property="og:description" content="一些说明 翻译自 Standard ECMA-262, 5.1 Edition, ECMAScript® Language Specification 翻译自 Standard ECMA-262, 6th Edition, ECMAScript® 2015 Language Specification 部分术语的翻译参考自 术语在线、ECMAScript® 语言规范中文翻译工作中英词汇对照表，部分">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-10-24T02:24:11.000Z">
+<meta property="article:modified_time" content="2020-11-17T03:30:32.910Z">
+<meta property="article:tag" content="ECMA">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://ssrkaze.github.io/posts/2794172400/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>散装自译ECMA262 | 自留地</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">自留地</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ssrkaze.github.io/posts/2794172400/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="自留地">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          散装自译ECMA262
+        </h1>
+
+        <div class="post-meta">
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-17 11:30:32" itemprop="dateModified" datetime="2020-11-17T11:30:32+08:00">2020-11-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%87%AA%E5%A8%B1%E8%87%AA%E4%B9%90/" itemprop="url" rel="index"><span itemprop="name">自娱自乐</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>12k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>20 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="一些说明"><a href="#一些说明" class="headerlink" title="一些说明"></a>一些说明</h1><ol>
+<li>翻译自 <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/5.1/index.html">Standard ECMA-262, 5.1 Edition, ECMAScript® Language Specification</a></li>
+<li>翻译自 <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html">Standard ECMA-262, 6th Edition, ECMAScript® 2015 Language Specification</a></li>
+<li>部分术语的翻译参考自 <a target="_blank" rel="noopener" href="https://www.termonline.cn/">术语在线</a>、<a target="_blank" rel="noopener" href="https://github.com/docschina/ecma262/issues/59">ECMAScript® 语言规范中文翻译工作中英词汇对照表</a>，部分术语翻译出自理解，仅供自娱自乐</li>
+<li>之所以翻译两份标准，一方面是因为二者之间存在较大的差异，ES6标准相较于ES5变化巨大。另一方面，现有的文献，既有基于ES5的描述，也有基于ES6的描述，有时连作者也没有翻阅文档查证内容的一致性，以至于ES5和ES6混杂，造成困扰。</li>
+</ol>
+<a id="more"></a>
+
+<h1 id="词法环境和环境记录"><a href="#词法环境和环境记录" class="headerlink" title="词法环境和环境记录"></a>词法环境和环境记录</h1><h2 id="词法环境和环境记录规范类型"><a href="#词法环境和环境记录规范类型" class="headerlink" title="词法环境和环境记录规范类型"></a>词法环境和环境记录规范类型</h2><ol>
+<li><p><strong><em>5.1 Edition, 8.11 The Lexical Environment and Environment Record Specification Types</em></strong></p>
+<blockquote>
+<p>The <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/5.1/index.html#sec-10.2">Lexical Environment</a> and <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/5.1/index.html#sec-10.2.1">Environment Record</a> types are used to explain the behaviour of name resolution in nested functions and blocks. These types and the operations upon them are defined in <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/5.1/index.html#sec-10">Clause 10</a>.</p>
+</blockquote>
+<p> <strong>词法环境</strong>和<strong>环境记录</strong>类型被用于解释在嵌套函数和块中名称解析的行为。这些基于词法环境和环境记录的类型和操作在<a href="#%E5%8F%AF%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81%E5%92%8C%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87">条文 10</a>中被定义。</p>
+</li>
+<li><p><strong><em>6 Edition, 6.2.5 The Lexical Environment and Environment Record Specification Types</em></strong></p>
+<blockquote>
+<p>The <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-lexical-environments">Lexical Environment</a> and <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> types are used to explain the behaviour of name resolution in nested functions and blocks. These types and the operations upon them are defined in <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-lexical-environments">8.1</a>.</p>
+</blockquote>
+<p> 同上，略。</p>
+</li>
+</ol>
+<h2 id="词法环境"><a href="#词法环境" class="headerlink" title="词法环境"></a>词法环境</h2><ol>
+<li><p><strong><em>5.1 Edition, 10.2 Lexical Environments</em></strong></p>
+<blockquote>
+<p>A <em>Lexical Environment</em> is a specification type used to define the association of Identifiers to specific variables and functions based upon the lexical nesting structure of ECMAScript code.</p>
+</blockquote>
+<p> <strong>词法环境</strong>是一种规范类型，被用于定义特定变量和基于 ECMAScrip 代码词法嵌套结构的函数 与标识符之间的联系。</p>
+<blockquote>
+<p>A Lexical Environment consists of an <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/5.1/index.html#sec-10.2.1">Environment Record</a> and a possibly null reference to an <em>outer</em> Lexical Environment.</p>
+</blockquote>
+<p> 词法环境由一个环境记录和一个可能为空的、指向外部词法环境的引用组成。</p>
+<blockquote>
+<p>Usually a Lexical Environment is associated with some specific syntactic structure of ECMAScript code such as a FunctionDeclaration, a WithStatement, or a Catch clause of a TryStatement and a new Lexical Environment is created each time such code is evaluated.</p>
+</blockquote>
+<p> 通常一个词法环境与一些像是函数声明、With 语句，或者在一个 Try 语句中的 Catch 从句这样特殊的 ECMAScrip 代码句法结构有关。每次这些代码被执行的时候，词法环境都会被创建。</p>
+<blockquote>
+<p>An <em><a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/5.1/index.html#sec-10.2.1">Environment Record</a></em> records the identifier bindings that are created within the scope of its associated Lexical Environment.</p>
+</blockquote>
+<p> <strong>环境记录</strong>记载了在与标识符相关的词法环境作用域中被创建的标识符绑定。</p>
+<blockquote>
+<p>The outer environment reference is used to model the logical nesting of Lexical Environment values.</p>
+</blockquote>
+<p> 外部环境引用被用于塑造词法环境值的逻辑嵌套。</p>
+<blockquote>
+<p>The outer reference of a (inner) Lexical Environment is a reference to the Lexical Environment that logically surrounds the inner Lexical Environment.</p>
+</blockquote>
+<p> 一个（内部）词法嵌套的外部引用是一个逻辑上围绕在内部词法环境周围的词法环境的引用。</p>
+<blockquote>
+<p>An outer Lexical Environment may, of course, have its own outer Lexical Environment. A Lexical Environment may serve as the outer environment for multiple inner Lexical Environments.</p>
+</blockquote>
+<p> 外部词法环境当然也可能拥有它的外部词法环境。一个词法环境可能会被充当为多个内部词法环境的外部环境。</p>
+<blockquote>
+<p>For example, if a FunctionDeclaration contains two nested FunctionDeclarations then the Lexical Environments of each of the nested functions will have as their outer Lexical Environment the Lexical Environment of the current execution of the surrounding function.</p>
+</blockquote>
+<p> 例如，一个函数声明包含了两个嵌套的函数声明，那么每个被嵌套的函数的词法环境将会以当前周围执行的函数的词法环境作为它们的外部词法环境。</p>
+<blockquote>
+<p>Lexical Environments and <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/5.1/index.html#sec-10.2.1">Environment Record</a> values are purely specification mechanisms and need not correspond to any specific artefact of an ECMAScript implementation.</p>
+</blockquote>
+<p> 词法环境和环境记录值只是纯粹的规范机制，不需要与任何特定的 ECMAScript 实现保持一致。</p>
+</li>
+<li><p><strong><em>6 Edition, 8.1 Lexical Environments</em></strong></p>
+<blockquote>
+<p>A <em>Lexical Environment</em> is a specification type used to define the association of Identifiers to specific variables and functions based upon the lexical nesting structure of ECMAScript code. A Lexical Environment consists of an <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> and a possibly null reference to an <em>outer</em> Lexical Environment. Usually a Lexical Environment is associated with some specific syntactic structure of ECMAScript code such as a FunctionDeclaration, a BlockStatement, or a Catch clause of a TryStatement and a new Lexical Environment is created each time such code is evaluated.</p>
+</blockquote>
+<p> (前略)……通常词法环境与一些特殊的 ECMAScrip 代码句法结构，像是函数声明、<strong>Block 语句</strong>，或者在一个 Try 语句中的 Catch 子句有关。</p>
+<blockquote>
+<p>An <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> records the identifier bindings that are created within the scope of its associated Lexical Environment. It is referred to as the Lexical Environment’s EnvironmentRecord.</p>
+</blockquote>
+<p> …它被描述为词法环境的环境记录。</p>
+<blockquote>
+<p>The outer environment reference is used to model the logical nesting of Lexical Environment values. The outer reference of a (inner) Lexical Environment is a reference to the Lexical Environment that logically surrounds the inner Lexical Environment. An outer Lexical Environment may, of course, have its own outer Lexical Environment. A Lexical Environment may serve as the outer environment for multiple inner Lexical Environments. For example, if a FunctionDeclaration contains two nested FunctionDeclarations then the Lexical Environments of each of the nested functions will have as their outer Lexical Environment the Lexical Environment of the current evaluation of the surrounding function.</p>
+</blockquote>
+<p> 同上，略。</p>
+<blockquote>
+<p>A <em>global environment</em> is a Lexical Environment which does not have an outer environment. The global environment’s outer environment reference is <strong>null</strong>.</p>
+</blockquote>
+<p> <strong>全局环境</strong>是一个没有外部环境的词法环境。全局环境的外部环境引用为<code>null</code>。</p>
+<blockquote>
+<p>A global environment’s EnvironmentRecord may be prepopulated with identifier bindings and includes an associated <em>global object</em> whose properties provide some of <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-global-environment-records">the global environment</a>’s identifier bindings.</p>
+</blockquote>
+<p> 全局环境的环境记录可能会被预先填充标识符绑定 并且会包含一个与之相关的、具有提供一些全局环境标识符绑定属性的全局对象。</p>
+<blockquote>
+<p>This global object is the value of a global environment’s <code>this</code> binding. As ECMAScript code is executed, additional properties may be added to the global object and the initial properties may be modified.</p>
+</blockquote>
+<p> 这个全局对象是全局环境<code>this</code>绑定的值。当 ECMAScript 代码被执行后，附加的属性可能会被添加到全局对象，并且原始的属性可能会被修改。</p>
+<blockquote>
+<p>A <em>module environment</em> is a Lexical Environment that contains the bindings for the top level declarations of a Module. It also contains the bindings that are explicitly imported by the Module. The outer environment of a module environment is a global environment.</p>
+</blockquote>
+<p> <strong>模块环境</strong>是一个包含了模块中顶级声明绑定的词法环境。它还包含了模块明确导入的绑定。模块环境的外部环境是全局环境。</p>
+<blockquote>
+<p>A <em>function environment</em> is a Lexical Environment that corresponds to the invocation of an <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-ecmascript-function-objects">ECMAScript function object</a>. A function environment may establish a new <code>this</code> binding. A function environment also captures the state necessary to support <code>super</code> method invocations.</p>
+</blockquote>
+<p> <strong>函数环境</strong>是一个与 ECMAScript 函数对象调用相一致的词法环境。函数环境可能会创建一个新的<code>this</code>绑定。函数环境还会捕获必要的状态来满足<code>super</code>调用。</p>
+<blockquote>
+<p>Lexical Environments and <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> values are purely specification mechanisms and need not correspond to any specific artefact of an ECMAScript implementation. It is impossible for an ECMAScript program to directly access or manipulate such values.</p>
+</blockquote>
+<p> ……它不可能被一个 ECMAScript 程序直接访问或者操控。</p>
+</li>
+</ol>
+<h2 id="环境记录"><a href="#环境记录" class="headerlink" title="环境记录"></a>环境记录</h2><ol>
+<li><p><strong><em>5.1 Edition, 10.2.1 Environment Records</em></strong></p>
+<blockquote>
+<p>There are two kinds of Environment Record values used in this specification: <em>declarative environment records</em> and <em>object environment records</em>.</p>
+</blockquote>
+<p> 在本规范中有两种环境记录的值：陈述性环境记录和对象环境记录。</p>
+<blockquote>
+<p>Declarative Environment Records are used to define the effect of ECMAScript language syntactic elements such as FunctionDeclarations, VariableDeclarations, and Catch clauses that directly associate identifier bindings with <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-ecmascript-language-types">ECMAScript language values</a>.</p>
+</blockquote>
+<p> <strong>陈述性环境记录</strong>被用于定义像是函数声明，变量定义和 Catch 从句这些直接与 绑定了 ECMAScript 语言值的标识符 有关联的 ECMAScript 语言句法元素的效果。</p>
+<blockquote>
+<p>Object environment records are used to define the effect of ECMAScript elements such as Program and WithStatement that associate identifier bindings with the properties of some object.</p>
+</blockquote>
+<p> <strong>对象环境记录</strong>被用于定义像是 Program 和 With 语句这样与 绑定了一些对象的属性的标识符 有关联的 ECMAScript 元素的效果。</p>
+<blockquote>
+<p>For specification purposes Environment Record values can be thought of as existing in a simple object-oriented hierarchy where Environment Record is an abstract classwith two concrete subclasses, declarative environment record and object environment record.</p>
+</blockquote>
+<p> 出于规范的需求，环境记录的值可以被认为是简单的面向对象层次中的一个包含两个具体子类的抽象类。这两个子类是陈述性环境记录和对象环境记录。</p>
+<blockquote>
+<p>The abstract class includes the abstract specification methods defined in Table 17. These abstract methods have distinct concrete algorithms for each of the concrete subclasses.</p>
+</blockquote>
+<p> 抽象类中包含的抽象规范方法定义在表 17 中。对于每个具体的子类这些抽象的方法都有具体而清晰的算法。</p>
+</li>
+<li><p><strong><em>6 Edition, 8.1.1 Environment Records</em></strong></p>
+<blockquote>
+<p>There are two primary kinds of Environment Record values used in this specification: <em>declarative Environment Records</em> and <em>object Environment Records</em>. Declarative Environment Records are used to define the effect of ECMAScript language syntactic elements such as FunctionDeclarations, VariableDeclarations, and Catch clauses that directly associate identifier bindings with <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-ecmascript-language-types">ECMAScript language values</a>. Object Environment Records are used to define the effect of ECMAScript elements such as WithStatement that associate identifier bindings with the properties of some object. <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-global-environment-records">Global Environment Records</a> and function Environment Records are specializations that are used for specifically for Script global declarations and for top-level declarations within functions.</p>
+</blockquote>
+<p> 在本规范中有两种基本环境记录的值：陈述性环境记录和对象环境记录。……<strong>对象环境记录</strong>被用于定义像是 With 语句这样与 绑定了一些对象的属性的标识符 有关联的 ECMAScript 元素的效果。全局环境记录和函数环境记录被专门用于脚本的全局声明和函数中的顶级声明。</p>
+<blockquote>
+<p>For specification purposes Environment Record values are values of the Record specification type and can be thought of as existing in a simple object-oriented hierarchy where Environment Record is an abstract class with three concrete subclasses, declarative Environment Record, object Environment Record, and global Environment Record. <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-function-environment-records">Function Environment Records</a> and module Environment Records are subclasses of declarative Environment Record. The abstract class includes the abstract specification methods defined in <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#table-15">Table 15</a>. These abstract methods have distinct concrete algorithms for each of the concrete subclasses.</p>
+</blockquote>
+<p> 出于规范的需求，环境记录的值可以被认为是简单的面向对象层次中的一个包含三个具体子类的抽象类。这三个子类是陈述性环境记录、对象环境记录和全局环境记录。函数环境记录和模块环境记录是陈述性环境记录的子类。…….</p>
+</li>
+</ol>
+<h2 id="全局环境"><a href="#全局环境" class="headerlink" title="全局环境"></a>全局环境</h2><ol>
+<li><p><strong><em>5.1 Edition, 10.2.3 The Global Environment</em></strong></p>
+<blockquote>
+<p>The <em>global environment</em> is a unique <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/5.1/index.html#sec-10.2">Lexical Environment</a> which is created before any ECMAScript code is executed. The global environment’s <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/5.1/index.html#sec-10.2.1">Environment Record</a> is an <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/5.1/index.html#sec-10.2.1">object environment record</a> whose binding object is the global object (<a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/5.1/index.html#sec-15.1">15.1</a>). The global environment’s <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/5.1/index.html#sec-10.2">outer environment reference</a> is <strong>null</strong>.</p>
+</blockquote>
+<p> <strong>全局环境</strong>是一个在任意的 ECMAScript 代码被执行前就创建了的特殊词法环境。全局环境的词法环境记录是一个绑定了全局对象的对象环境记录。全局环境的外部环境引用为<code>null</code>。</p>
+<blockquote>
+<p>As ECMAScript code is executed, additional properties may be added to the global object and the initial properties may be modified.</p>
+</blockquote>
+<p> 当 ECMAScript 代码被执行后，附加的属性可能会被添加到全局对象，并且原始的属性可能会被修改。</p>
+</li>
+<li><p><strong><em>6 Edition, 8.1 Lexical Environments</em></strong></p>
+<blockquote>
+<p>A <em>global environment</em> is a Lexical Environment which does not have an outer environment. The global environment’s outer environment reference is <strong>null</strong>. A global environment’s EnvironmentRecord may be prepopulated with identifier bindings and includes an associated <em>global object</em> whose properties provide some of <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-global-environment-records">the global environment</a>’s identifier bindings. This global object is the value of a global environment’s <code>this</code> binding. As ECMAScript code is executed, additional properties may be added to the global object and the initial properties may be modified.</p>
+</blockquote>
+<p> <strong>全局环境</strong>是一个没有外部环境的词法环境。全局环境的外部环境引用为<code>null</code>。全局环境的环境记录可能会被预先填充标识符绑定 并且会包含一个与之相关的、具有提供一些全局环境标识符绑定属性的全局对象。这个全局对象是全局环境<code>this</code>绑定的值。当 ECMAScript 代码被执行后，附加的属性可能会被添加到全局对象，并且原始的属性可能会被修改。</p>
+</li>
+</ol>
+<h2 id="全局环境记录"><a href="#全局环境记录" class="headerlink" title="全局环境记录"></a>全局环境记录</h2><ol>
+<li><p>ES5.1 无相关描述</p>
+</li>
+<li><p><strong><em>6 Edition, 8.1.1.4 Global Environment Records</em></strong></p>
+<blockquote>
+<p>A global <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> is used to represent the outer most scope that is shared by all of the ECMAScript Script elements that are processed in a common <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-code-realms">Realm</a> (<a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-code-realms">8.2</a>). A global <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> provides the bindings for built-in globals (<a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-global-object">clause 18</a>), properties of the global object, and for all top-level declarations (<a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-block-static-semantics-toplevellexicallyscopeddeclarations">13.2.8</a>, <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-block-static-semantics-toplevelvarscopeddeclarations">13.2.10</a>) that occur within a Script.</p>
+</blockquote>
+<p> 全局环境记录被用于代表所有执行在通用领域的 ECMAScript 元素共享的最外层作用域。全局环境记录提供了一个内置全局、全局对象属性和在脚本中出现的所有顶级声明的绑定。</p>
+<blockquote>
+<p>A global <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> is logically a single record but it is specified as a composite encapsulating an object <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> and a declarative <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a>.</p>
+</blockquote>
+<p> 全局环境记录虽然逻辑上是一种单一的记录，但它被明确地概括为一个对象环境记录和陈述性环境记录的混合。</p>
+<blockquote>
+<p>The object <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> has as its base object the global object of the associated <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-code-realms">Realm</a>.This global object is the value returned by the global Environment Record’s GetThisBinding concrete method.</p>
+</blockquote>
+<p> 对象环境记录在它相关的领域的将全局对象作为它的基础对象。这个全局对象是全局环境的<code>GetThisBinding</code>这一具体方法的返回值。</p>
+<blockquote>
+<p>The object <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> component of a global <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> contains the bindings for all built-in globals (<a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-global-object">clause 18</a>) and all bindings introduced by a <em>FunctionDeclaration</em>, <em>GeneratorDeclaration</em>, or VariableStatement contained in global code.</p>
+</blockquote>
+<p> 一个全局环境记录中的对象环境记录部分包含了所有内置全局和所有在全局代码中被函数声明、生成器声明或者变量语句引入的绑定。</p>
+<blockquote>
+<p>The bindings for all other ECMAScript declarations in global code are contained in the declarative <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> component of the global <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a>.</p>
+</blockquote>
+<p> 其他所有在全局代码中的 ECMAScript 声明被包含在全局环境记录中的陈述性环境声明部分。</p>
+<blockquote>
+<p>Properties may be created directly on a global object. Hence, the object <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> component of a global <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> may contain both bindings created explicitly by <em>FunctionDeclaration</em>, <em>GeneratorDeclaration</em>, or VariableDeclaration declarations and binding created implicitly as properties of the global object.</p>
+</blockquote>
+<p> 属性可能会被直接在全局对象上创建。因此，全局环境记录中的对象环境记录部分可能同时包含被函数声明、生成器声明和变量声明明确建的绑定和作为全局对象属性被隐式创建的绑定。</p>
+<blockquote>
+<p>In order to identify which bindings were explicitly created using declarations, a global <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> maintains a list of the names bound using its CreateGlobalVarBindings and CreateGlobalFunctionBindings concrete methods.</p>
+</blockquote>
+<p> 为了明确哪些绑定是使用声明被明确创建的，全局环境记录会维护一个包含了捆绑使用具体方法<code>CreateGlobalVarBindings</code>和<code>CreateGlobalFunctionBindings</code>的变量的列表。</p>
+<blockquote>
+<p>Global Environment Records have the additional fields listed in Table 18 and the additional methods listed in Table 19.</p>
+</blockquote>
+<p> 全局环境记录拥有表 18 列出的附加属性和表 19 中附加的方法。</p>
+</li>
+</ol>
+<h2 id="对象环境记录"><a href="#对象环境记录" class="headerlink" title="对象环境记录"></a>对象环境记录</h2><ol>
+<li><p><strong><em>5.1 Edition, 10.2.1.2 Object Environment Records</em></strong></p>
+<blockquote>
+<p>Each <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/5.1/index.html#sec-10.2.1">object environment record</a> is associated with an object called its <em>binding object</em>.An <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/5.1/index.html#sec-10.2.1">object environment record</a> binds the set of identifier names that directly correspond to the property names of its binding object.</p>
+</blockquote>
+<p> 每个对象环境记录都有与之关联的对象，这些环境对象被称为绑定对象。对象环境记录绑定了一系列的与它绑定的对象属性名相一致的标识符名称。</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/ECMA/" rel="tag"><i class="fa fa-tag"></i> ECMA</a>
+          </div>
+
+        
+
+
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E8%AF%B4%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">一些说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%8D%E6%B3%95%E7%8E%AF%E5%A2%83%E5%92%8C%E7%8E%AF%E5%A2%83%E8%AE%B0%E5%BD%95"><span class="nav-number">2.</span> <span class="nav-text">词法环境和环境记录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%8D%E6%B3%95%E7%8E%AF%E5%A2%83%E5%92%8C%E7%8E%AF%E5%A2%83%E8%AE%B0%E5%BD%95%E8%A7%84%E8%8C%83%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.1.</span> <span class="nav-text">词法环境和环境记录规范类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%8D%E6%B3%95%E7%8E%AF%E5%A2%83"><span class="nav-number">2.2.</span> <span class="nav-text">词法环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E8%AE%B0%E5%BD%95"><span class="nav-number">2.3.</span> <span class="nav-text">环境记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E7%8E%AF%E5%A2%83"><span class="nav-number">2.4.</span> <span class="nav-text">全局环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E7%8E%AF%E5%A2%83%E8%AE%B0%E5%BD%95"><span class="nav-number">2.5.</span> <span class="nav-text">全局环境记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E7%8E%AF%E5%A2%83%E8%AE%B0%E5%BD%95"><span class="nav-number">2.6.</span> <span class="nav-text">对象环境记录</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name"></p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">12k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">20 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
