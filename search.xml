@@ -7,7 +7,8 @@
 <li>翻译自 <a href="https://www.ecma-international.org/ecma-262/5.1/index.html">Standard ECMA-262, 5.1 Edition, ECMAScript® Language Specification</a></li>
 <li>翻译自 <a href="https://www.ecma-international.org/ecma-262/6.0/index.html">Standard ECMA-262, 6th Edition, ECMAScript® 2015 Language Specification</a></li>
 <li>部分术语的翻译参考自 <a href="https://www.termonline.cn/">术语在线</a>、<a href="https://github.com/docschina/ecma262/issues/59">ECMAScript® 语言规范中文翻译工作中英词汇对照表</a>，部分术语翻译出自理解，仅供自娱自乐</li>
-<li>之所以翻译两份标准，一方面是因为二者之间存在较大的差异，ES6标准相较于ES5变化巨大。另一方面，现有的文献，既有基于ES5的描述，也有基于ES6的描述，有时连作者也没有翻阅文档查证内容的一致性，以至于ES5和ES6混杂，造成困扰。</li>
+<li>之所以翻译两份标准，一方面是ES6标准相较于ES5变化巨大。另一方面，是现有的文献既有基于ES5的，也有基于ES6的，甚至有的两者混杂，知识体系混乱。</li>
+<li>不定期更新，不全部翻译，只挑选自己正在研究的部分。</li>
 </ol>
 <a id="more"></a>
 
