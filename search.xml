@@ -1,14 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>散装自译ECMA262</title>
-    <url>/posts/2794172400/</url>
+    <title>散装自译ECMA262(ES5)</title>
+    <url>/posts/1562462180/</url>
+    <content><![CDATA[<h1 id="一些说明"><a href="#一些说明" class="headerlink" title="一些说明"></a>一些说明</h1><ol>
+<li>本文档是 散装自译 ECMA262(中英对照) 中 ES5 相关部分的整合，只保留中文，只为优化阅读体验，内容结构完全一致。</li>
+<li>可能还是会比较难理解，请多多担待。</li>
+</ol>
+<a id="more"></a>
+
+<h1 id="词法环境和环境记录"><a href="#词法环境和环境记录" class="headerlink" title="词法环境和环境记录"></a>词法环境和环境记录</h1><h2 id="8-1-1-词法环境和环境记录规范类型"><a href="#8-1-1-词法环境和环境记录规范类型" class="headerlink" title="8.1.1 词法环境和环境记录规范类型"></a>8.1.1 词法环境和环境记录规范类型</h2><p><strong>词法环境</strong>和<strong>环境记录</strong>类型被用于解释在嵌套函数和块中名称解析的行为。这些基于词法环境和环境记录的类型和操作在<a href="#%E5%8F%AF%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81%E5%92%8C%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87">条文 10</a>中被定义。</p>
+<h2 id="10-2-词法环境"><a href="#10-2-词法环境" class="headerlink" title="10.2 词法环境"></a>10.2 词法环境</h2><p><strong>词法环境</strong>是一种用于定义特定变量和基于 ECMAScript 代码词法嵌套结构的函数与标识符之间的联系的规范类型。<strong>词法环境</strong>由一个<strong>环境记录</strong>和一个可能为空的<strong>外部词法环境引用</strong>组成。通常一个<strong>词法环境</strong>与一些像是函数声明、With 语句，或者在一个 Try 语句中的 Catch 从句这样特殊的 ECMAScript 代码句法结构有关。每次这些代码被执行的时候，词法环境都会被创建。</p>
+<p><strong>环境记录</strong>记载了在与标识符相关的词法环境作用域中被创建的标识符绑定。</p>
+<p><strong>外部环境引用</strong>被用于塑造词法环境值的逻辑嵌套。一个（内部）词法嵌套的外部引用是对逻辑上包含了内部词法环境的一个词法环境的引用。<strong>外部词法环境</strong>当然也可能拥有它的外部词法环境。一个词法环境可能会被充当为多个内部词法环境的外部环境。例如，一个函数声明包含了两个嵌套的函数声明，那么每个被嵌套的函数的词法环境将会以当前外围执行的函数的词法环境作为它们的外部词法环境。</p>
+<p>词法环境和环境记录值只是纯粹的规范机制，不需要与任何特定的 ECMAScript 实现保持一致。它不可能被一个 ECMAScript 程序直接访问或者操控。</p>
+<h2 id="10-2-1-环境记录"><a href="#10-2-1-环境记录" class="headerlink" title="10.2.1 环境记录"></a>10.2.1 环境记录</h2><p>在本规范中有两种环境记录的值：<strong>声明环境记录</strong>和<strong>对象环境记录</strong>。<strong>声明环境记录</strong>被用于定义像是函数声明，变量定义和 Catch 从句这些直接与绑定了 ECMAScript 语言值的标识符有关联的 ECMAScript 语言句法元素的效果。<strong>对象环境记录</strong>被用于定义像是 Program 和 With 语句这样与绑定了一些对象的属性的标识符有关联的 ECMAScript 元素的效果。</p>
+<p>出于规范的需求，<strong>环境记录</strong>的值可以被认为是简单的面向对象层次中的一个包含了<strong>声明环境记录</strong>和<strong>对象环境记录</strong>这两个具体子类的抽象类。抽象类中包含了定义在表 17 中的抽象规范方法。每个具体的子类的抽象方法都有具体而清晰的算法。</p>
+<h2 id="10-2-1-1-声明环境记录"><a href="#10-2-1-1-声明环境记录" class="headerlink" title="10.2.1.1 声明环境记录"></a>10.2.1.1 声明环境记录</h2><p>每个<strong>声明环境记录</strong>都与一个包含了变量和/或函数声明的 ECMAScript 程序作用域相关。<strong>声明环境记录</strong>绑定了一系列在它作用域内被声明定义的标识符。</p>
+<p>除了所有环境记录都支持的可变绑定之外，<strong>声明环境记录</strong>还允许<strong>不可变绑定</strong>。<strong>不可变绑定</strong>是当标识符和值之间的关系被建立时可能不会被立即修改。创建和初始化<strong>不可变绑定</strong>是截然不同的步骤，所以这种绑定是有可能是处在初始化或者未初始化状态下的。<strong>声明环境记录</strong>除了支持环境记录的抽象规范方法，还支持表 18 中的方法。</p>
+<p><strong>声明环境记录</strong>的具体规范方法的行为由以下算法定义。</p>
+<h2 id="10-2-1-2-对象环境记录"><a href="#10-2-1-2-对象环境记录" class="headerlink" title="10.2.1.2 对象环境记录"></a>10.2.1.2 对象环境记录</h2><p>每个<strong>对象环境记录</strong>都与一个被称为绑定对象的对象相关联。<strong>对象环境记录</strong>把它的绑定对象的属性名与一系列直接对应的标识符名称一一绑定。不符合<code>IdentifierName</code>的属性名不会包含在该系列中。自有的属性和继承的属性会无视<code>[[Enumerable]]</code>属性的设置包含在该系列中。因为对象上的属性可以动态地被添加或者被删除，<strong>对象环境记录</strong>绑定的这一系列标识符可能会因为有着添加或者删除属性的任意操作的副作用而被隐蔽地修改。任何作为上述副作用的结果而被创建的绑定都会被视为可变绑定，即使这个属性的<code>Writable</code>属性值为<code>false</code>。在对象环境记录中不存在不可变的绑定。</p>
+<p><strong>对象环境记录</strong>可以被配置为在被函数调用时提供它们的绑定对象作为一个隐式的<code>this</code>的值。这个能力被用于明确包含了绑定的 With 语句的行为。这个能力被每个对象环境记录中的一个名为<code>provideThis</code>的布尔值控制。默认情况下，这个值是<code>false</code>。</p>
+<p>对象环境记录的具体规范方法行为被以下的算法定义。</p>
+<h2 id="10-2-3-全局环境"><a href="#10-2-3-全局环境" class="headerlink" title="10.2.3 全局环境"></a>10.2.3 全局环境</h2><p><strong>全局环境</strong>是一个在任意的 ECMAScript 代码被执行前就创建了的特殊词法环境。全局环境的词法环境记录是一个绑定了全局对象的对象环境记录。全局环境的外部环境引用为<code>null</code>。</p>
+<p>当 ECMAScript 代码被执行后，附加的属性可能会被添加到全局对象，并且原始的属性可能会被修改。</p>
+]]></content>
+      <categories>
+        <category>自娱自乐</category>
+      </categories>
+      <tags>
+        <tag>ECMA</tag>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>散装自译ECMA262(ES6)</title>
+    <url>/posts/1980503079/</url>
+    <content><![CDATA[<h1 id="一些说明"><a href="#一些说明" class="headerlink" title="一些说明"></a>一些说明</h1><ol>
+<li>本文档是 散装自译 ECMA262(中英对照) 中 ES6 相关部分的整合，只保留中文，只为优化阅读体验，内容结构完全一致。</li>
+<li>可能还是会比较难理解，请多多担待。</li>
+</ol>
+<a id="more"></a>
+
+<h1 id="词法环境和环境记录"><a href="#词法环境和环境记录" class="headerlink" title="词法环境和环境记录"></a>词法环境和环境记录</h1><h2 id="6-2-5-词法环境和环境记录规范类型"><a href="#6-2-5-词法环境和环境记录规范类型" class="headerlink" title="6.2.5 词法环境和环境记录规范类型"></a>6.2.5 词法环境和环境记录规范类型</h2><p><strong>词法环境</strong>和<strong>环境记录</strong>类型被用于解释在嵌套函数和块中名称解析的行为。这些基于词法环境和环境记录的类型和操作在<a href="#%E5%8F%AF%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81%E5%92%8C%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87">8.1</a>中被定义。</p>
+<h2 id="8-1-词法环境"><a href="#8-1-词法环境" class="headerlink" title="8.1 词法环境"></a>8.1 词法环境</h2><p><strong>词法环境</strong>是一种用于定义特定变量和基于 ECMAScript 代码词法嵌套结构的函数与标识符之间的联系的规范类型。<strong>词法环境</strong>由一个<strong>环境记录</strong>和一个可能为<code>null</code>的<strong>外部词法环境引用</strong>组成。通常一个<strong>词法环境</strong>与一些像是函数声明、Block 语句，或者在一个 Try 语句中的 Catch 从句这样特殊的 ECMAScript 代码句法结构有关。每次这些代码被执行的时候，词法环境都会被创建。</p>
+<p><strong>环境记录</strong>记载了在与标识符相关的词法环境作用域中被创建的标识符绑定。它被描述为词法环境的环境记录。</p>
+<p><strong>外部环境引用</strong>被用于塑造词法环境值的逻辑嵌套。一个（内部）词法嵌套的外部引用是对逻辑上包含了内部词法环境的一个词法环境的引用。<strong>外部词法环境</strong>当然也可能拥有它的外部词法环境。一个词法环境可能会被充当为多个内部词法环境的外部环境。例如，一个函数声明包含了两个嵌套的函数声明，那么每个被嵌套的函数的词法环境将会以当前外围执行的函数的词法环境作为它们的外部词法环境。</p>
+<p><strong>全局环境</strong>是一个没有外部环境的词法环境。<strong>全局环境</strong>的外部环境引用为<code>null</code>。<strong>全局环境</strong>的环境记录可能会被预先填充标识符绑定并且会包含一个与之相关的、具有提供一些全局环境标识符绑定属性的全局对象。这个全局对象是全局环境<code>this</code>绑定的值。当 ECMAScript 代码被执行后，附加的属性可能会被添加到全局对象，并且原始的属性可能会被修改。</p>
+<p><strong>模块环境</strong>是一个包含了模块中顶级声明绑定的词法环境。它还包含了模块明确导入的绑定。<strong>模块环境</strong>的外部环境是全局环境。</p>
+<p><strong>函数环境</strong>是一个与 ECMAScript 函数对象调用相一致的词法环境。<strong>函数环境</strong>可能会创建一个新的<code>this</code>绑定。函数环境还会捕获必要的状态来满足<code>super</code>调用。</p>
+<p>词法环境和环境记录值只是纯粹的规范机制，不需要与任何特定的 ECMAScript 实现保持一致。它不可能被一个 ECMAScript 程序直接访问或者操控。</p>
+<h2 id="8-1-1-环境记录"><a href="#8-1-1-环境记录" class="headerlink" title="8.1.1 环境记录"></a>8.1.1 环境记录</h2><p>在本规范中有两种基本环境记录的值：<strong>声明环境记录</strong>和<strong>对象环境记录</strong>。<strong>声明环境记录</strong>被用于定义像是函数声明，变量定义和 Catch 从句这些直接与绑定了 ECMAScript 语言值的标识符有关联的 ECMAScript 语言句法元素的效果。<strong>对象环境记录</strong>被用于定义像是 With 语句这样与绑定了一些对象的属性的标识符有关联的 ECMAScript 元素的效果。<strong>全局环境记录</strong>和<strong>函数环境记录</strong>被专门用于脚本的全局声明和函数中的顶级声明。</p>
+<p>出于规范的需求，<strong>环境记录</strong>的值是记录规范类型的值并且可以被认为是简单的面向对象层次中的一个包含了<strong>声明环境记录</strong>、<strong>对象环境记录</strong>和<strong>全局环境记录</strong>这三个具体子类的抽象类。<strong>函数环境记录</strong>和<strong>模块环境记录</strong>是<strong>声明环境记录</strong>的子类。抽象类中包含了定义在表 15 中的抽象规范方法。每个具体的子类的抽象方法都有具体而清晰的算法。</p>
+<h2 id="8-1-1-1-声明环境记录"><a href="#8-1-1-1-声明环境记录" class="headerlink" title="8.1.1.1 声明环境记录"></a>8.1.1.1 声明环境记录</h2><p>每个<strong>声明环境记录</strong>都与一个包含了变量、constant、let、class、module、import 和/或函数声明的 ECMAScript 程序作用域相关。<strong>声明环境记录</strong>绑定了一系列在它作用域内被声明定义的标识符。</p>
+<p><strong>声明环境记录</strong>的具体规范方法的行为由以下算法定义。</p>
+<h2 id="8-1-1-2-对象环境记录"><a href="#8-1-1-2-对象环境记录" class="headerlink" title="8.1.1.2 对象环境记录"></a>8.1.1.2 对象环境记录</h2><p>每个<strong>对象环境记录</strong>都与一个被称为绑定对象的对象相关联。<strong>对象环境记录</strong>把它的绑定对象的属性名与一系列直接对应的字符串标识符名称一一绑定。不符合<code>IdentifierName</code>的字符串属性名不会包含在该系列中。自有的属性和继承的属性会无视<code>[[Enumerable]]</code>属性的设置包含在该系列中。因为对象上的属性可以动态地被添加或者被删除，<strong>对象环境记录</strong>绑定的这一系列标识符可能会因为有着添加或者删除属性的任意操作的副作用而被隐蔽地修改。任何作为上述副作用的结果而被创建的绑定都会被视为可变绑定，即使这个属性的<code>Writable</code>属性值为<code>false</code>。在<strong>对象环境记录</strong>中不存在不可变的绑定。</p>
+<p>为<code>With</code>语句创建的<strong>对象环境记录</strong>在被函数调用时可以提供它们的绑定对象作为隐式的<code>this</code>值。这个能力被每个<strong>对象环境记录</strong>中的一个名为<code>withEnvironment</code>的布尔值控制。默认情况下，这个值是<code>false</code>。</p>
+<p><strong>对象环境记录</strong>的具体规范方法行为被以下的算法定义。</p>
+<h2 id="8-1-1-3-函数环境记录"><a href="#8-1-1-3-函数环境记录" class="headerlink" title="8.1.1.3 函数环境记录"></a>8.1.1.3 函数环境记录</h2><p><strong>函数环境记录</strong>是用于代表函数顶级作用域的一种<strong>声明环境记录</strong>，并且当这个函数不是箭头函数时，提供了一个<code>this</code>的绑定。当一个函数不是箭头函数且引用了<code>super</code>时，它的<strong>函数环境记录</strong>还会包含用于执行函数内调用<code>super</code>方法的状态。</p>
+<p><strong>函数环境记录</strong>还拥有表 16 中列出的附加状态字段。</p>
+<p><strong>函数环境记录</strong>支持表 15 列出的所有<strong>声明环境记录</strong>方法并且与除了<code>HasThisBinding</code>和<code>HasSuperBinding</code>之外的所有方法共享同样的标准。另外，<strong>函数环境记录</strong>还支持表 17 中的方法。</p>
+<p><strong>函数环境记录</strong>的附加具体规范方法行为被以下的算法定义。</p>
+<h2 id="8-1-1-4-全局环境记录"><a href="#8-1-1-4-全局环境记录" class="headerlink" title="8.1.1.4 全局环境记录"></a>8.1.1.4 全局环境记录</h2><p><strong>全局环境记录</strong>被用于代表所有执行在通用领域的 ECMAScript 元素共享的最外层作用域。<strong>全局环境记录</strong>提供了一个内置的全局、全局对象的属性和在脚本中出现的所有顶级声明的绑定。</p>
+<p><strong>全局环境记录</strong>虽然逻辑上是一种单一的记录，但它被明确地概括为一个<strong>对象环境记录</strong>和<strong>声明环境记录</strong>的混合。<strong>对象环境记录</strong>在全局对象的相关领域将其作为基础对象。这个全局对象是全局环境记录的<code>GetThisBinding</code>这一具体方法的返回值。<strong>全局环境记录</strong>中的<strong>对象环境记录</strong>部分包含了所有内置的全局（从句 18）和所有在全局代码中被函数声明、生成器声明或者变量语句引入的绑定。其他所有在全局代码中的 ECMAScript 声明的绑定被包含在<strong>全局环境记录</strong>中的<strong>声明环境记录</strong>部分。</p>
+<p>属性可能会被直接在全局对象上创建。因此，<strong>全局环境记录</strong>中的<strong>对象环境记录</strong>部分可能同时包含被函数声明、生成器声明和变量声明明确建的绑定和作为全局对象的属性被隐式创建的绑定。为了明确哪些绑定是使用声明被明确创建的，<strong>全局环境记录</strong>会使用它<code>CreateGlobalVarBindings</code>和<code>CreateGlobalFunctionBindings</code>这两个具体的方法来维护一个名称绑定列表。</p>
+<p><strong>全局环境记录</strong>拥有表 18 列出的附加字段和表 19 中附加的方法。</p>
+<h2 id="8-1-1-5-模块环境记录"><a href="#8-1-1-5-模块环境记录" class="headerlink" title="8.1.1.5 模块环境记录"></a>8.1.1.5 模块环境记录</h2><p><strong>模块环境记录</strong>是一种用于代表 ECMAScript 模块外部作用域的的<strong>声明环境记录</strong>。除了普通的可变和不可变绑定，<strong>模块环境记录</strong>还允许不可变导入绑定。不可变导入绑定是一种提供间接访问在另一个环境记录中的目标绑定的绑定。</p>
+<p><strong>模块环境记录</strong>支持表 15 列出的所有<strong>声明环境记录</strong>方法并且与除了<code>GetBindingValue</code>、<code>DeleteBinding</code>、<code>HasThisBinding</code>和<code>GetThisBinding</code>之外的所有方法共享同样的标准。另外，<strong>函数环境记录</strong>还支持表 20 中的方法。</p>
+<p><strong>模块环境记录</strong>的附加具体规范方法行为被以下的算法定义。</p>
+]]></content>
+      <categories>
+        <category>自娱自乐</category>
+      </categories>
+      <tags>
+        <tag>ECMA</tag>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>散装自译ECMA262(中英对照)</title>
+    <url>/posts/763779422/</url>
     <content><![CDATA[<h1 id="一些说明"><a href="#一些说明" class="headerlink" title="一些说明"></a>一些说明</h1><ol>
 <li>翻译自 <a href="https://www.ecma-international.org/ecma-262/5.1/index.html">Standard ECMA-262, 5.1 Edition, ECMAScript® Language Specification</a></li>
 <li>翻译自 <a href="https://www.ecma-international.org/ecma-262/6.0/index.html">Standard ECMA-262, 6th Edition, ECMAScript® 2015 Language Specification</a></li>
 <li>部分术语的翻译参考自 <a href="https://www.termonline.cn/">术语在线</a>、<a href="https://github.com/docschina/ecma262/issues/59">ECMAScript® 语言规范中文翻译工作中英词汇对照表</a>，部分术语翻译出自理解，仅供自娱自乐</li>
-<li>之所以翻译两份标准，一方面是ES6标准相较于ES5变化巨大。另一方面，是现有的文献既有基于ES5的，也有基于ES6的，甚至有的两者混杂，知识体系混乱。</li>
-<li>不定期更新，不全部翻译，只挑选自己正在研究的部分。</li>
+<li>之所以翻译两份标准，是因为 ES6 相对 ES5 有着巨大的变化。现行的许多资料既有 ES5 的。也有 ES6 的，为了对照方便，就一起翻译了。</li>
+<li>由于原文本身晦涩难明，所以译文也不可避免地出现了一些长难句。后续每一阶段的结束，我都会撰写一篇文章用于梳理。</li>
+<li>另有两份文档分别是本文档中文部分针对 ES5、ES6 的提取，可能会对阅读理解有所帮助。</li>
 </ol>
 <a id="more"></a>
 
@@ -20,26 +98,26 @@
 <p> <strong>词法环境</strong>和<strong>环境记录</strong>类型被用于解释在嵌套函数和块中名称解析的行为。这些基于词法环境和环境记录的类型和操作在<a href="#%E5%8F%AF%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81%E5%92%8C%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87">条文 10</a>中被定义。</p>
 </li>
 <li><p><strong><em>6 Edition, 6.2.5 The Lexical Environment and Environment Record Specification Types</em></strong></p>
+</li>
+</ol>
 <blockquote>
 <p>The <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-lexical-environments">Lexical Environment</a> and <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> types are used to explain the behaviour of name resolution in nested functions and blocks. These types and the operations upon them are defined in <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-lexical-environments">8.1</a>.</p>
 </blockquote>
-<p> 同上，略。</p>
-</li>
-</ol>
+<p>同上，略。</p>
 <h2 id="词法环境"><a href="#词法环境" class="headerlink" title="词法环境"></a>词法环境</h2><ol>
 <li><p><strong><em>5.1 Edition, 10.2 Lexical Environments</em></strong></p>
 <blockquote>
 <p>A <em>Lexical Environment</em> is a specification type used to define the association of Identifiers to specific variables and functions based upon the lexical nesting structure of ECMAScript code.</p>
 </blockquote>
-<p> <strong>词法环境</strong>是一种规范类型，被用于定义特定变量和基于 ECMAScrip 代码词法嵌套结构的函数 与标识符之间的联系。</p>
+<p> <strong>词法环境</strong>是一种用于定义特定变量和基于 ECMAScript 代码词法嵌套结构的函数与标识符之间的联系的规范类型。</p>
 <blockquote>
 <p>A Lexical Environment consists of an <a href="https://www.ecma-international.org/ecma-262/5.1/index.html#sec-10.2.1">Environment Record</a> and a possibly null reference to an <em>outer</em> Lexical Environment.</p>
 </blockquote>
-<p> 词法环境由一个环境记录和一个可能为空的、指向外部词法环境的引用组成。</p>
+<p> <strong>词法环境</strong>由一个<strong>环境记录</strong>和一个可能为空的<strong>外部词法环境引用</strong>组成。</p>
 <blockquote>
 <p>Usually a Lexical Environment is associated with some specific syntactic structure of ECMAScript code such as a FunctionDeclaration, a WithStatement, or a Catch clause of a TryStatement and a new Lexical Environment is created each time such code is evaluated.</p>
 </blockquote>
-<p> 通常一个词法环境与一些像是函数声明、With 语句，或者在一个 Try 语句中的 Catch 从句这样特殊的 ECMAScrip 代码句法结构有关。每次这些代码被执行的时候，词法环境都会被创建。</p>
+<p> 通常一个<strong>词法环境</strong>与一些像是函数声明、With 语句，或者在一个 Try 语句中的 Catch 从句这样特殊的 ECMAScript 代码句法结构有关。每次这些代码被执行的时候，词法环境都会被创建。</p>
 <blockquote>
 <p>An <em><a href="https://www.ecma-international.org/ecma-262/5.1/index.html#sec-10.2.1">Environment Record</a></em> records the identifier bindings that are created within the scope of its associated Lexical Environment.</p>
 </blockquote>
@@ -47,29 +125,29 @@
 <blockquote>
 <p>The outer environment reference is used to model the logical nesting of Lexical Environment values.</p>
 </blockquote>
-<p> 外部环境引用被用于塑造词法环境值的逻辑嵌套。</p>
+<p> <strong>外部环境引用</strong>被用于塑造词法环境值的逻辑嵌套。</p>
 <blockquote>
 <p>The outer reference of a (inner) Lexical Environment is a reference to the Lexical Environment that logically surrounds the inner Lexical Environment.</p>
 </blockquote>
-<p> 一个（内部）词法嵌套的外部引用是一个逻辑上围绕在内部词法环境周围的词法环境的引用。</p>
+<p> 一个（内部）词法嵌套的外部引用是对逻辑上包含了内部词法环境的一个词法环境的引用。</p>
 <blockquote>
 <p>An outer Lexical Environment may, of course, have its own outer Lexical Environment. A Lexical Environment may serve as the outer environment for multiple inner Lexical Environments.</p>
 </blockquote>
-<p> 外部词法环境当然也可能拥有它的外部词法环境。一个词法环境可能会被充当为多个内部词法环境的外部环境。</p>
+<p> <strong>外部词法环境</strong>当然也可能拥有它的外部词法环境。一个词法环境可能会被充当为多个内部词法环境的外部环境。</p>
 <blockquote>
 <p>For example, if a FunctionDeclaration contains two nested FunctionDeclarations then the Lexical Environments of each of the nested functions will have as their outer Lexical Environment the Lexical Environment of the current execution of the surrounding function.</p>
 </blockquote>
-<p> 例如，一个函数声明包含了两个嵌套的函数声明，那么每个被嵌套的函数的词法环境将会以当前周围执行的函数的词法环境作为它们的外部词法环境。</p>
+<p> 例如，一个函数声明包含了两个嵌套的函数声明，那么每个被嵌套的函数的词法环境将会以当前外围执行的函数的词法环境作为它们的外部词法环境。</p>
 <blockquote>
-<p>Lexical Environments and <a href="https://www.ecma-international.org/ecma-262/5.1/index.html#sec-10.2.1">Environment Record</a> values are purely specification mechanisms and need not correspond to any specific artefact of an ECMAScript implementation.</p>
+<p>Lexical Environments and <a href="https://www.ecma-international.org/ecma-262/5.1/index.html#sec-10.2.1">Environment Record</a> values are purely specification mechanisms and need not correspond to any specific artefact of an ECMAScript implementation.It is impossible for an ECMAScript program to directly access or manipulate such values.</p>
 </blockquote>
-<p> 词法环境和环境记录值只是纯粹的规范机制，不需要与任何特定的 ECMAScript 实现保持一致。</p>
+<p> 词法环境和环境记录值只是纯粹的规范机制，不需要与任何特定的 ECMAScript 实现保持一致。它不可能被一个 ECMAScript 程序直接访问或者操控。</p>
 </li>
 <li><p><strong><em>6 Edition, 8.1 Lexical Environments</em></strong></p>
 <blockquote>
 <p>A <em>Lexical Environment</em> is a specification type used to define the association of Identifiers to specific variables and functions based upon the lexical nesting structure of ECMAScript code. A Lexical Environment consists of an <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> and a possibly null reference to an <em>outer</em> Lexical Environment. Usually a Lexical Environment is associated with some specific syntactic structure of ECMAScript code such as a FunctionDeclaration, a BlockStatement, or a Catch clause of a TryStatement and a new Lexical Environment is created each time such code is evaluated.</p>
 </blockquote>
-<p> (前略)……通常词法环境与一些特殊的 ECMAScrip 代码句法结构，像是函数声明、<strong>Block 语句</strong>，或者在一个 Try 语句中的 Catch 子句有关。</p>
+<p> (前略)……<strong>词法环境</strong>由一个<strong>环境记录</strong>和一个可能为<code>null</code>的<strong>外部词法环境引用</strong>组成。通常一个<strong>词法环境</strong>与一些像是函数声明、Block 语句，或者在一个 Try 语句中的 Catch 从句这样特殊的 ECMAScript 代码句法结构有关。</p>
 <blockquote>
 <p>An <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> records the identifier bindings that are created within the scope of its associated Lexical Environment. It is referred to as the Lexical Environment’s EnvironmentRecord.</p>
 </blockquote>
@@ -81,11 +159,11 @@
 <blockquote>
 <p>A <em>global environment</em> is a Lexical Environment which does not have an outer environment. The global environment’s outer environment reference is <strong>null</strong>.</p>
 </blockquote>
-<p> <strong>全局环境</strong>是一个没有外部环境的词法环境。全局环境的外部环境引用为<code>null</code>。</p>
+<p> <strong>全局环境</strong>是一个没有外部环境的词法环境。<strong>全局环境</strong>的外部环境引用为<code>null</code>。</p>
 <blockquote>
 <p>A global environment’s EnvironmentRecord may be prepopulated with identifier bindings and includes an associated <em>global object</em> whose properties provide some of <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-global-environment-records">the global environment</a>’s identifier bindings.</p>
 </blockquote>
-<p> 全局环境的环境记录可能会被预先填充标识符绑定 并且会包含一个与之相关的、具有提供一些全局环境标识符绑定属性的全局对象。</p>
+<p> <strong>全局环境</strong>的环境记录可能会被预先填充标识符绑定并且会包含一个与之相关的、具有提供一些全局环境标识符绑定属性的全局对象。</p>
 <blockquote>
 <p>This global object is the value of a global environment’s <code>this</code> binding. As ECMAScript code is executed, additional properties may be added to the global object and the initial properties may be modified.</p>
 </blockquote>
@@ -93,15 +171,15 @@
 <blockquote>
 <p>A <em>module environment</em> is a Lexical Environment that contains the bindings for the top level declarations of a Module. It also contains the bindings that are explicitly imported by the Module. The outer environment of a module environment is a global environment.</p>
 </blockquote>
-<p> <strong>模块环境</strong>是一个包含了模块中顶级声明绑定的词法环境。它还包含了模块明确导入的绑定。模块环境的外部环境是全局环境。</p>
+<p> <strong>模块环境</strong>是一个包含了模块中顶级声明绑定的词法环境。它还包含了模块明确导入的绑定。<strong>模块环境</strong>的外部环境是全局环境。</p>
 <blockquote>
 <p>A <em>function environment</em> is a Lexical Environment that corresponds to the invocation of an <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-ecmascript-function-objects">ECMAScript function object</a>. A function environment may establish a new <code>this</code> binding. A function environment also captures the state necessary to support <code>super</code> method invocations.</p>
 </blockquote>
-<p> <strong>函数环境</strong>是一个与 ECMAScript 函数对象调用相一致的词法环境。函数环境可能会创建一个新的<code>this</code>绑定。函数环境还会捕获必要的状态来满足<code>super</code>调用。</p>
+<p> <strong>函数环境</strong>是一个与 ECMAScript 函数对象调用相一致的词法环境。<strong>函数环境</strong>可能会创建一个新的<code>this</code>绑定。函数环境还会捕获必要的状态来满足<code>super</code>调用。</p>
 <blockquote>
 <p>Lexical Environments and <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> values are purely specification mechanisms and need not correspond to any specific artefact of an ECMAScript implementation. It is impossible for an ECMAScript program to directly access or manipulate such values.</p>
 </blockquote>
-<p> ……它不可能被一个 ECMAScript 程序直接访问或者操控。</p>
+<p> 同上。略。</p>
 </li>
 </ol>
 <h2 id="环境记录"><a href="#环境记录" class="headerlink" title="环境记录"></a>环境记录</h2><ol>
@@ -109,33 +187,109 @@
 <blockquote>
 <p>There are two kinds of Environment Record values used in this specification: <em>declarative environment records</em> and <em>object environment records</em>.</p>
 </blockquote>
-<p> 在本规范中有两种环境记录的值：陈述性环境记录和对象环境记录。</p>
+<p> 在本规范中有两种环境记录的值：<strong>声明环境记录</strong>和<strong>对象环境记录</strong>。</p>
 <blockquote>
 <p>Declarative Environment Records are used to define the effect of ECMAScript language syntactic elements such as FunctionDeclarations, VariableDeclarations, and Catch clauses that directly associate identifier bindings with <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-ecmascript-language-types">ECMAScript language values</a>.</p>
 </blockquote>
-<p> <strong>陈述性环境记录</strong>被用于定义像是函数声明，变量定义和 Catch 从句这些直接与 绑定了 ECMAScript 语言值的标识符 有关联的 ECMAScript 语言句法元素的效果。</p>
+<p> <strong>声明环境记录</strong>被用于定义像是函数声明，变量定义和 Catch 从句这些直接与绑定了 ECMAScript 语言值的标识符有关联的 ECMAScript 语言句法元素的效果。</p>
 <blockquote>
 <p>Object environment records are used to define the effect of ECMAScript elements such as Program and WithStatement that associate identifier bindings with the properties of some object.</p>
 </blockquote>
-<p> <strong>对象环境记录</strong>被用于定义像是 Program 和 With 语句这样与 绑定了一些对象的属性的标识符 有关联的 ECMAScript 元素的效果。</p>
+<p> <strong>对象环境记录</strong>被用于定义像是 Program 和 With 语句这样与绑定了一些对象的属性的标识符有关联的 ECMAScript 元素的效果。</p>
 <blockquote>
 <p>For specification purposes Environment Record values can be thought of as existing in a simple object-oriented hierarchy where Environment Record is an abstract classwith two concrete subclasses, declarative environment record and object environment record.</p>
 </blockquote>
-<p> 出于规范的需求，环境记录的值可以被认为是简单的面向对象层次中的一个包含两个具体子类的抽象类。这两个子类是陈述性环境记录和对象环境记录。</p>
+<p> 出于规范的需求，<strong>环境记录</strong>的值可以被认为是简单的面向对象层次中的一个包含了<strong>声明环境记录</strong>和<strong>对象环境记录</strong>这两个具体子类的抽象类。</p>
 <blockquote>
 <p>The abstract class includes the abstract specification methods defined in Table 17. These abstract methods have distinct concrete algorithms for each of the concrete subclasses.</p>
 </blockquote>
-<p> 抽象类中包含的抽象规范方法定义在表 17 中。对于每个具体的子类这些抽象的方法都有具体而清晰的算法。</p>
+<p> 抽象类中包含了定义在表 17 中的抽象规范方法。每个具体的子类的抽象方法都有具体而清晰的算法。</p>
 </li>
 <li><p><strong><em>6 Edition, 8.1.1 Environment Records</em></strong></p>
 <blockquote>
 <p>There are two primary kinds of Environment Record values used in this specification: <em>declarative Environment Records</em> and <em>object Environment Records</em>. Declarative Environment Records are used to define the effect of ECMAScript language syntactic elements such as FunctionDeclarations, VariableDeclarations, and Catch clauses that directly associate identifier bindings with <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-ecmascript-language-types">ECMAScript language values</a>. Object Environment Records are used to define the effect of ECMAScript elements such as WithStatement that associate identifier bindings with the properties of some object. <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-global-environment-records">Global Environment Records</a> and function Environment Records are specializations that are used for specifically for Script global declarations and for top-level declarations within functions.</p>
 </blockquote>
-<p> 在本规范中有两种基本环境记录的值：陈述性环境记录和对象环境记录。……<strong>对象环境记录</strong>被用于定义像是 With 语句这样与 绑定了一些对象的属性的标识符 有关联的 ECMAScript 元素的效果。全局环境记录和函数环境记录被专门用于脚本的全局声明和函数中的顶级声明。</p>
+<p> 在本规范中有两种基本环境记录的值：<strong>声明环境记录</strong>和<strong>对象环境记录</strong>。……<strong>对象环境记录</strong>被用于定义像是 With 语句这样与绑定了一些对象的属性的标识符有关联的 ECMAScript 元素的效果。<strong>全局环境记录</strong>和<strong>函数环境记录</strong>被专门用于脚本的全局声明和函数中的顶级声明。</p>
 <blockquote>
 <p>For specification purposes Environment Record values are values of the Record specification type and can be thought of as existing in a simple object-oriented hierarchy where Environment Record is an abstract class with three concrete subclasses, declarative Environment Record, object Environment Record, and global Environment Record. <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-function-environment-records">Function Environment Records</a> and module Environment Records are subclasses of declarative Environment Record. The abstract class includes the abstract specification methods defined in <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#table-15">Table 15</a>. These abstract methods have distinct concrete algorithms for each of the concrete subclasses.</p>
 </blockquote>
-<p> 出于规范的需求，环境记录的值可以被认为是简单的面向对象层次中的一个包含三个具体子类的抽象类。这三个子类是陈述性环境记录、对象环境记录和全局环境记录。函数环境记录和模块环境记录是陈述性环境记录的子类。…….</p>
+<p> 出于规范的需求，<strong>环境记录</strong>的值是记录规范类型的值并且可以被认为是简单的面向对象层次中的一个包含了<strong>声明环境记录</strong>、<strong>对象环境记录</strong>和<strong>全局环境记录</strong>这三个具体子类的抽象类。<strong>函数环境记录</strong>和<strong>模块环境记录</strong>是<strong>声明环境记录</strong>的子类。…….</p>
+</li>
+</ol>
+<h2 id="对象环境记录"><a href="#对象环境记录" class="headerlink" title="对象环境记录"></a>对象环境记录</h2><ol>
+<li><p><strong><em>5.1 Edition, 10.2.1.2 Object Environment Records</em></strong></p>
+<blockquote>
+<p>Each <a href="https://www.ecma-international.org/ecma-262/5.1/index.html#sec-10.2.1">object environment record</a> is associated with an object called its <em>binding object</em>.An <a href="https://www.ecma-international.org/ecma-262/5.1/index.html#sec-10.2.1">object environment record</a> binds the set of identifier names that directly correspond to the property names of its binding object.</p>
+</blockquote>
+<p> 每个<strong>对象环境记录</strong>都与一个被称为绑定对象的对象相关联。<strong>对象环境记录</strong>把它的绑定对象的属性名与一系列直接对应的标识符名称一一绑定。</p>
+<blockquote>
+<p>Property names that are not an IdentifierName are not included in the set of bound identifiers. Both own and inherited properties are included in the set regardless of the setting of their [[Enumerable]] attribute.</p>
+</blockquote>
+<p> 不符合<code>IdentifierName</code>的属性名不会包含在该系列中。自有的属性和继承的属性会无视<code>[[Enumerable]]</code>属性的设置包含在该系列中。</p>
+<blockquote>
+<p>Because properties can be dynamically added and deleted from objects, the set of identifiers bound by an <a href="https://www.ecma-international.org/ecma-262/5.1/index.html#sec-10.2.1">object environment record</a> may potentially change as a side-effect of any operation that adds or deletes properties.</p>
+</blockquote>
+<p> 因为对象上的属性可以动态地被添加或者被删除，<strong>对象环境记录</strong>绑定的这一系列标识符可能会因为有着添加或者删除属性的任意操作的副作用而被隐蔽地修改。</p>
+<blockquote>
+<p>Any bindings that are created as a result of such a side-effect are considered to be a mutable binding even if the Writable attribute of the corresponding property has the value <strong>false</strong>. Immutable bindings do not exist for object environment records.</p>
+</blockquote>
+<p> 任何作为上述副作用的结果而被创建的绑定都会被视为可变绑定，即使这个属性的<code>Writable</code>属性值为<code>false</code>。在对象环境记录中不存在不可变的绑定。</p>
+<blockquote>
+<p>Object environment records can be configured to provide their binding object as an implicit this value for use in function calls.</p>
+</blockquote>
+<p> <strong>对象环境记录</strong>可以被配置为在被函数调用时提供它们的绑定对象作为一个隐式的<code>this</code>的值。</p>
+<blockquote>
+<p>This capability is used to specify the behaviour of With Statement (<a href="https://www.ecma-international.org/ecma-262/5.1/index.html#sec-12.10">12.10</a>) induced bindings. The capability is controlled by a provideThis Boolean value that is associated with each <a href="https://www.ecma-international.org/ecma-262/5.1/index.html#sec-10.2.1">object environment record</a>. By default, the value of provideThis is <strong>false</strong> for any <a href="https://www.ecma-international.org/ecma-262/5.1/index.html#sec-10.2.1">object environment record</a>.</p>
+</blockquote>
+<p> 这个能力被用于明确包含了绑定的 With 语句的行为。这个能力被每个对象环境记录中的一个名为<code>provideThis</code>的布尔值控制。默认情况下，这个值是<code>false</code>。。</p>
+<blockquote>
+<p>The behaviour of the concrete specification methods for Object Environment Records is defined by the following algorithms.</p>
+</blockquote>
+<p> <strong>对象环境记录</strong>的具体规范方法行为被以下的算法定义。</p>
+</li>
+<li><p><strong><em>6 Edition, 8.1.1.2 Object Environment Records</em></strong></p>
+<blockquote>
+<p>Each object <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> is associated with an object called its <em>binding object</em>. An object <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> binds the set of string identifier names that directly correspond to the property names of its binding object. Property keys that are not strings in the form of an IdentifierName are not included in the set of bound identifiers. Both own and inherited properties are included in the set regardless of the setting of their [[Enumerable]] attribute. Because properties can be dynamically added and deleted from objects, the set of identifiers bound by an object <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> may potentially change as a side-effect of any operation that adds or deletes properties. Any bindings that are created as a result of such a side-effect are considered to be a mutable binding even if the Writable attribute of the corresponding property has the value <strong>false</strong>. Immutable bindings do not exist for object Environment Records.</p>
+</blockquote>
+<p> …每个<strong>对象环境记录</strong>都与一个被称为绑定对象的对象相关联。<strong>对象环境记录</strong>把它的绑定对象的属性名与一系列直接对应的字符串标识符名称一一绑定。不符合<code>IdentifierName</code>的字符串属性名不会包含在该系列中。</p>
+<blockquote>
+<p>Object Environment Records created for <code>with</code> statements (<a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-with-statement">13.11</a>) can provide their binding object as an implicit <strong>this</strong> value for use in function calls. The capability is controlled by a withEnvironment Boolean value that is associated with each object <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a>. By default, the value of withEnvironment is <strong>false</strong> for any object <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a>.</p>
+</blockquote>
+<p> 为<code>With</code>语句创建的<strong>对象环境记录</strong>在被函数调用时可以提供它们的绑定对象作为隐式的<code>this</code>值。这个能力被每个<strong>对象环境记录</strong>中的一个名为<code>withEnvironment</code>的布尔值控制。默认情况下，这个值是<code>false</code>。</p>
+<blockquote>
+<p>The behaviour of the concrete specification methods for object Environment Records is defined by the following algorithms.</p>
+</blockquote>
+<p> 同上，略。</p>
+</li>
+</ol>
+<h2 id="声明环境记录"><a href="#声明环境记录" class="headerlink" title="声明环境记录"></a>声明环境记录</h2><ol>
+<li><p><strong><em>5.1 Edition, 10.2.1.1 Declarative Environment Records</em></strong></p>
+<blockquote>
+<p>Each <a href="https://www.ecma-international.org/ecma-262/5.1/index.html#sec-10.2.1">declarative environment record</a> is associated with an ECMAScript program scope containing variable and/or function declarations. A <a href="https://www.ecma-international.org/ecma-262/5.1/index.html#sec-10.2.1">declarative environment record</a> binds the set of identifiers defined by the declarations contained within its scope.</p>
+</blockquote>
+<p> 每个<strong>声明环境记录</strong>都与一个包含了变量和/或函数声明的 ECMAScript 程序作用域相关。<strong>声明环境记录</strong>绑定了一系列在它作用域内被声明定义的标识符。</p>
+<blockquote>
+<p>In addition to the mutable bindings supported by all Environment Records, declarative environment records also provide for immutable bindings. An immutable binding is one where the association between an identifier and a value may not be modified once it has been established.</p>
+</blockquote>
+<p> 除了所有环境记录都支持的可变绑定之外，<strong>声明环境记录</strong>还允许<strong>不可变绑定</strong>。<strong>不可变绑定</strong>是当标识符和值之间的关系被建立时可能不会被立即修改。</p>
+<blockquote>
+<p>Creation and initialisation of immutable binding are distinct steps so it is possible for such bindings to exist in either an initialised or uninitialised state. Declarative environment records support the methods listed in Table 18 in addition to the Environment Record abstract specification methods:</p>
+</blockquote>
+<p> 创建和初始化<strong>不可变绑定</strong>是截然不同的步骤，所以这种绑定是有可能是处在初始化或者未初始化状态下的。<strong>声明环境记录</strong>除了支持环境记录的抽象规范方法，还支持表 18 中的方法。</p>
+<blockquote>
+<p>The behaviour of the concrete specification methods for Declarative Environment Records is defined by the following algorithms</p>
+</blockquote>
+<p> <strong>声明环境记录</strong>的具体规范方法的行为由以下算法定义。</p>
+</li>
+<li><p><strong><em>6 Edition, 8.1.1.1 Declarative Environment Records</em></strong></p>
+<blockquote>
+<p>Each declarative <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> is associated with an ECMAScript program scope containing variable, constant, let, class, module, import, and/or function declarations. A declarative <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> binds the set of identifiers defined by the declarations contained within its scope.</p>
+</blockquote>
+<p> 每个<strong>声明环境记录</strong>都与一个包含了变量、constant、let、class、module、important 和/或函数声明的 ECMAScript 程序作用域相关。<strong>声明环境记录</strong>绑定了一系列在它作用域内被声明定义的标识符。</p>
+<blockquote>
+<p>The behaviour of the concrete specification methods for declarative Environment Records is defined by the following algorithms.</p>
+</blockquote>
+<p> 同上。略。</p>
 </li>
 </ol>
 <h2 id="全局环境"><a href="#全局环境" class="headerlink" title="全局环境"></a>全局环境</h2><ol>
@@ -153,7 +307,29 @@
 <blockquote>
 <p>A <em>global environment</em> is a Lexical Environment which does not have an outer environment. The global environment’s outer environment reference is <strong>null</strong>. A global environment’s EnvironmentRecord may be prepopulated with identifier bindings and includes an associated <em>global object</em> whose properties provide some of <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-global-environment-records">the global environment</a>’s identifier bindings. This global object is the value of a global environment’s <code>this</code> binding. As ECMAScript code is executed, additional properties may be added to the global object and the initial properties may be modified.</p>
 </blockquote>
-<p> <strong>全局环境</strong>是一个没有外部环境的词法环境。全局环境的外部环境引用为<code>null</code>。全局环境的环境记录可能会被预先填充标识符绑定 并且会包含一个与之相关的、具有提供一些全局环境标识符绑定属性的全局对象。这个全局对象是全局环境<code>this</code>绑定的值。当 ECMAScript 代码被执行后，附加的属性可能会被添加到全局对象，并且原始的属性可能会被修改。</p>
+<p> <strong>全局环境</strong>是一个没有外部环境的词法环境。<strong>全局环境</strong>的外部环境引用为<code>null</code>。<strong>全局环境</strong>的环境记录可能会被预先填充标识符绑定并且会包含一个与之相关的、具有提供一些全局环境标识符绑定属性的全局对象。这个全局对象是全局环境<code>this</code>绑定的值。当 ECMAScript 代码被执行后，附加的属性可能会被添加到全局对象，并且原始的属性可能会被修改。</p>
+</li>
+</ol>
+<h2 id="函数环境记录"><a href="#函数环境记录" class="headerlink" title="函数环境记录"></a>函数环境记录</h2><ol>
+<li><p>ES5.1 无相关描述</p>
+</li>
+<li><p><strong><em>6 Edition, 8.1.1.3 Function Environment Records</em></strong></p>
+<blockquote>
+<p>A function <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> is a declarative <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> that is used to represent the top-level scope of a function and, if the function is not an ArrowFunction, provides a <code>this</code> binding. If a function is not an ArrowFunction function and references <code>super</code>, its function <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> also contains the state that is used to perform <code>super</code> method invocations from within the function.</p>
+</blockquote>
+<p> 函数环境记录是用于代表函数顶级作用域的一种声明环境记录，并且当这个函数不是箭头函数时，提供了一个<code>this</code>的绑定。当一个函数不是箭头函数且引用了<code>super</code>时，它的函数环境记录还会包含用于执行函数内调用<code>super</code>方法的状态。</p>
+<blockquote>
+<p>Function Environment Records have the additional state fields listed in <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#table-16">Table 16</a>.</p>
+</blockquote>
+<p> 函数环境记录还拥有表 16 中列出的附加状态字段。</p>
+<blockquote>
+<p>Function Environment Records support all of the declarative Environment Record methods listed in <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#table-15">Table 15</a> and share the same specifications for all of those methods except for HasThisBinding and HasSuperBinding. In addition, function Environment Records support the methods listed in <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#table-17">Table 17</a>:</p>
+</blockquote>
+<p> <strong>函数环境记录</strong>支持表 15 列出的所有<strong>声明环境记录</strong>方法并且与除了<code>HasThisBinding</code>和<code>HasSuperBinding</code>之外的所有方法共享同样的标准。另外，<strong>函数环境记录</strong>还支持表 17 中的方法。</p>
+<blockquote>
+<p>The behaviour of the additional concrete specification methods for function Environment Records is defined by the following algorithms:</p>
+</blockquote>
+<p> <strong>函数环境记录</strong>的附加具体规范方法行为被以下的算法定义。</p>
 </li>
 </ol>
 <h2 id="全局环境记录"><a href="#全局环境记录" class="headerlink" title="全局环境记录"></a>全局环境记录</h2><ol>
@@ -163,43 +339,53 @@
 <blockquote>
 <p>A global <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> is used to represent the outer most scope that is shared by all of the ECMAScript Script elements that are processed in a common <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-code-realms">Realm</a> (<a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-code-realms">8.2</a>). A global <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> provides the bindings for built-in globals (<a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-global-object">clause 18</a>), properties of the global object, and for all top-level declarations (<a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-block-static-semantics-toplevellexicallyscopeddeclarations">13.2.8</a>, <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-block-static-semantics-toplevelvarscopeddeclarations">13.2.10</a>) that occur within a Script.</p>
 </blockquote>
-<p> 全局环境记录被用于代表所有执行在通用领域的 ECMAScript 元素共享的最外层作用域。全局环境记录提供了一个内置全局、全局对象属性和在脚本中出现的所有顶级声明的绑定。</p>
+<p> <strong>全局环境记录</strong>被用于代表所有执行在通用领域的 ECMAScript 元素共享的最外层作用域。<strong>全局环境记录</strong>提供了一个内置的全局、全局对象的属性和在脚本中出现的所有顶级声明的绑定。</p>
 <blockquote>
 <p>A global <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> is logically a single record but it is specified as a composite encapsulating an object <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> and a declarative <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a>.</p>
 </blockquote>
-<p> 全局环境记录虽然逻辑上是一种单一的记录，但它被明确地概括为一个对象环境记录和陈述性环境记录的混合。</p>
+<p> <strong>全局环境记录</strong>虽然逻辑上是一种单一的记录，但它被明确地概括为一个<strong>对象环境记录</strong>和<strong>声明环境记录</strong>的混合。</p>
 <blockquote>
 <p>The object <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> has as its base object the global object of the associated <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-code-realms">Realm</a>.This global object is the value returned by the global Environment Record’s GetThisBinding concrete method.</p>
 </blockquote>
-<p> 对象环境记录在它相关的领域的将全局对象作为它的基础对象。这个全局对象是全局环境的<code>GetThisBinding</code>这一具体方法的返回值。</p>
+<p> <strong>对象环境记录</strong>在全局对象的相关领域将其作为基础对象。这个全局对象是全局环境记录的<code>GetThisBinding</code>这一具体方法的返回值。</p>
 <blockquote>
 <p>The object <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> component of a global <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> contains the bindings for all built-in globals (<a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-global-object">clause 18</a>) and all bindings introduced by a <em>FunctionDeclaration</em>, <em>GeneratorDeclaration</em>, or VariableStatement contained in global code.</p>
 </blockquote>
-<p> 一个全局环境记录中的对象环境记录部分包含了所有内置全局和所有在全局代码中被函数声明、生成器声明或者变量语句引入的绑定。</p>
+<p> <strong>全局环境记录</strong>中的<strong>对象环境记录</strong>部分包含了所有内置的全局（从句 18）和所有在全局代码中被函数声明、生成器声明或者变量语句引入的绑定。</p>
 <blockquote>
 <p>The bindings for all other ECMAScript declarations in global code are contained in the declarative <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> component of the global <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a>.</p>
 </blockquote>
-<p> 其他所有在全局代码中的 ECMAScript 声明被包含在全局环境记录中的陈述性环境声明部分。</p>
+<p> 其他所有在全局代码中的 ECMAScript 声明的绑定被包含在<strong>全局环境记录</strong>中的<strong>声明环境记录</strong>部分。</p>
 <blockquote>
 <p>Properties may be created directly on a global object. Hence, the object <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> component of a global <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> may contain both bindings created explicitly by <em>FunctionDeclaration</em>, <em>GeneratorDeclaration</em>, or VariableDeclaration declarations and binding created implicitly as properties of the global object.</p>
 </blockquote>
-<p> 属性可能会被直接在全局对象上创建。因此，全局环境记录中的对象环境记录部分可能同时包含被函数声明、生成器声明和变量声明明确建的绑定和作为全局对象属性被隐式创建的绑定。</p>
+<p> 属性可能会被直接在全局对象上创建。因此，<strong>全局环境记录</strong>中的<strong>对象环境记录</strong>部分可能同时包含被函数声明、生成器声明和变量声明明确建的绑定和作为全局对象的属性被隐式创建的绑定。</p>
 <blockquote>
 <p>In order to identify which bindings were explicitly created using declarations, a global <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> maintains a list of the names bound using its CreateGlobalVarBindings and CreateGlobalFunctionBindings concrete methods.</p>
 </blockquote>
-<p> 为了明确哪些绑定是使用声明被明确创建的，全局环境记录会维护一个包含了捆绑使用具体方法<code>CreateGlobalVarBindings</code>和<code>CreateGlobalFunctionBindings</code>的变量的列表。</p>
+<p> 为了明确哪些绑定是使用声明被明确创建的，<strong>全局环境记录</strong>会使用它<code>CreateGlobalVarBindings</code>和<code>CreateGlobalFunctionBindings</code>这两个具体的方法来维护一个名称绑定列表。</p>
 <blockquote>
 <p>Global Environment Records have the additional fields listed in Table 18 and the additional methods listed in Table 19.</p>
 </blockquote>
-<p> 全局环境记录拥有表 18 列出的附加属性和表 19 中附加的方法。</p>
+<p> <strong>全局环境记录</strong>拥有表 18 列出的附加字段和表 19 中附加的方法。</p>
 </li>
 </ol>
-<h2 id="对象环境记录"><a href="#对象环境记录" class="headerlink" title="对象环境记录"></a>对象环境记录</h2><ol>
-<li><p><strong><em>5.1 Edition, 10.2.1.2 Object Environment Records</em></strong></p>
+<h2 id="模块环境记录"><a href="#模块环境记录" class="headerlink" title="模块环境记录"></a>模块环境记录</h2><ol>
+<li><p>ES5.1 无相关描述</p>
+</li>
+<li><p><strong><em>6 Edition, 8.1.1.5 Module Environment Records</em></strong></p>
 <blockquote>
-<p>Each <a href="https://www.ecma-international.org/ecma-262/5.1/index.html#sec-10.2.1">object environment record</a> is associated with an object called its <em>binding object</em>.An <a href="https://www.ecma-international.org/ecma-262/5.1/index.html#sec-10.2.1">object environment record</a> binds the set of identifier names that directly correspond to the property names of its binding object.</p>
+<p>A module <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> is a declarative <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#sec-environment-records">Environment Record</a> that is used to represent the outer scope of an ECMAScript Module. In additional to normal mutable and immutable bindings, module Environment Records also provide immutable import bindings which are bindings that provide indirect access to a target binding that exists in another Environment Record.</p>
 </blockquote>
-<p> 每个对象环境记录都有与之关联的对象，这些环境对象被称为绑定对象。对象环境记录绑定了一系列的与它绑定的对象属性名相一致的标识符名称。</p>
+<p> <strong>模块环境记录</strong>是一种用于代表 ECMAScript 模块外部作用域的的<strong>声明环境记录</strong>。除了普通的可变和不可变绑定，<strong>模块环境记录</strong>还允许不可变导入绑定。不可变导入绑定是一种提供间接访问在另一个环境记录中的目标绑定的绑定。</p>
+<blockquote>
+<p>Module Environment Records support all of the declarative Environment Record methods listed in <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#table-15">Table 15</a> and share the same specifications for all of those methods except for GetBindingValue, DeleteBinding, HasThisBinding and GetThisBinding. In addition, module Environment Records support the methods listed in <a href="https://www.ecma-international.org/ecma-262/6.0/index.html#table-20">Table 20</a>:</p>
+</blockquote>
+<p> <strong>模块环境记录</strong>支持表 15 列出的所有<strong>声明环境记录</strong>方法并且与除了<code>GetBindingValue</code>、<code>DeleteBinding</code>、<code>HasThisBinding</code>和<code>GetThisBinding</code>之外的所有方法共享同样的标准。另外，<strong>函数环境记录</strong>还支持表 20 中的方法。</p>
+<blockquote>
+<p>The behaviour of the additional concrete specification methods for module Environment Records are defined by the following algorithms:</p>
+</blockquote>
+<p> <strong>模块环境记录</strong>的附加具体规范方法行为被以下的算法定义。</p>
 </li>
 </ol>
 ]]></content>
@@ -208,6 +394,7 @@
       </categories>
       <tags>
         <tag>ECMA</tag>
+        <tag>JavaScript</tag>
       </tags>
   </entry>
 </search>

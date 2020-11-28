@@ -22,27 +22,33 @@
     var CONFIG = {"hostname":"ssrkaze.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="自留地">
-<meta property="og:url" content="https://ssrkaze.github.io/">
+  <meta name="description" content="一些说明 本文档是 散装自译 ECMA262(中英对照) 中 ES5 相关部分的整合，只保留中文，只为优化阅读体验，内容结构完全一致。 可能还是会比较难理解，请多多担待。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="散装自译ECMA262(ES5)">
+<meta property="og:url" content="https://ssrkaze.github.io/posts/1562462180/">
 <meta property="og:site_name" content="自留地">
+<meta property="og:description" content="一些说明 本文档是 散装自译 ECMA262(中英对照) 中 ES5 相关部分的整合，只保留中文，只为优化阅读体验，内容结构完全一致。 可能还是会比较难理解，请多多担待。">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-11-28T10:36:36.000Z">
+<meta property="article:modified_time" content="2020-11-28T10:38:45.736Z">
+<meta property="article:tag" content="ECMA">
+<meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://ssrkaze.github.io/">
+<link rel="canonical" href="https://ssrkaze.github.io/posts/1562462180/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>自留地</title>
+  <title>散装自译ECMA262(ES5) | 自留地</title>
   
 
 
@@ -153,9 +159,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -171,10 +178,9 @@
       <meta itemprop="name" content="自留地">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/posts/1562462180/" class="post-title-link" itemprop="url">散装自译ECMA262(ES5)</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          散装自译ECMA262(ES5)
+        </h1>
 
         <div class="post-meta">
               <span class="post-meta-item">
@@ -236,91 +242,36 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="一些说明"><a href="#一些说明" class="headerlink" title="一些说明"></a>一些说明</h1><ol>
+        <h1 id="一些说明"><a href="#一些说明" class="headerlink" title="一些说明"></a>一些说明</h1><ol>
 <li>本文档是 散装自译 ECMA262(中英对照) 中 ES5 相关部分的整合，只保留中文，只为优化阅读体验，内容结构完全一致。</li>
 <li>可能还是会比较难理解，请多多担待。</li>
 </ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/1562462180/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
+<a id="more"></a>
+
+<h1 id="词法环境和环境记录"><a href="#词法环境和环境记录" class="headerlink" title="词法环境和环境记录"></a>词法环境和环境记录</h1><h2 id="8-1-1-词法环境和环境记录规范类型"><a href="#8-1-1-词法环境和环境记录规范类型" class="headerlink" title="8.1.1 词法环境和环境记录规范类型"></a>8.1.1 词法环境和环境记录规范类型</h2><p><strong>词法环境</strong>和<strong>环境记录</strong>类型被用于解释在嵌套函数和块中名称解析的行为。这些基于词法环境和环境记录的类型和操作在<a href="#%E5%8F%AF%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81%E5%92%8C%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87">条文 10</a>中被定义。</p>
+<h2 id="10-2-词法环境"><a href="#10-2-词法环境" class="headerlink" title="10.2 词法环境"></a>10.2 词法环境</h2><p><strong>词法环境</strong>是一种用于定义特定变量和基于 ECMAScript 代码词法嵌套结构的函数与标识符之间的联系的规范类型。<strong>词法环境</strong>由一个<strong>环境记录</strong>和一个可能为空的<strong>外部词法环境引用</strong>组成。通常一个<strong>词法环境</strong>与一些像是函数声明、With 语句，或者在一个 Try 语句中的 Catch 从句这样特殊的 ECMAScript 代码句法结构有关。每次这些代码被执行的时候，词法环境都会被创建。</p>
+<p><strong>环境记录</strong>记载了在与标识符相关的词法环境作用域中被创建的标识符绑定。</p>
+<p><strong>外部环境引用</strong>被用于塑造词法环境值的逻辑嵌套。一个（内部）词法嵌套的外部引用是对逻辑上包含了内部词法环境的一个词法环境的引用。<strong>外部词法环境</strong>当然也可能拥有它的外部词法环境。一个词法环境可能会被充当为多个内部词法环境的外部环境。例如，一个函数声明包含了两个嵌套的函数声明，那么每个被嵌套的函数的词法环境将会以当前外围执行的函数的词法环境作为它们的外部词法环境。</p>
+<p>词法环境和环境记录值只是纯粹的规范机制，不需要与任何特定的 ECMAScript 实现保持一致。它不可能被一个 ECMAScript 程序直接访问或者操控。</p>
+<h2 id="10-2-1-环境记录"><a href="#10-2-1-环境记录" class="headerlink" title="10.2.1 环境记录"></a>10.2.1 环境记录</h2><p>在本规范中有两种环境记录的值：<strong>声明环境记录</strong>和<strong>对象环境记录</strong>。<strong>声明环境记录</strong>被用于定义像是函数声明，变量定义和 Catch 从句这些直接与绑定了 ECMAScript 语言值的标识符有关联的 ECMAScript 语言句法元素的效果。<strong>对象环境记录</strong>被用于定义像是 Program 和 With 语句这样与绑定了一些对象的属性的标识符有关联的 ECMAScript 元素的效果。</p>
+<p>出于规范的需求，<strong>环境记录</strong>的值可以被认为是简单的面向对象层次中的一个包含了<strong>声明环境记录</strong>和<strong>对象环境记录</strong>这两个具体子类的抽象类。抽象类中包含了定义在表 17 中的抽象规范方法。每个具体的子类的抽象方法都有具体而清晰的算法。</p>
+<h2 id="10-2-1-1-声明环境记录"><a href="#10-2-1-1-声明环境记录" class="headerlink" title="10.2.1.1 声明环境记录"></a>10.2.1.1 声明环境记录</h2><p>每个<strong>声明环境记录</strong>都与一个包含了变量和/或函数声明的 ECMAScript 程序作用域相关。<strong>声明环境记录</strong>绑定了一系列在它作用域内被声明定义的标识符。</p>
+<p>除了所有环境记录都支持的可变绑定之外，<strong>声明环境记录</strong>还允许<strong>不可变绑定</strong>。<strong>不可变绑定</strong>是当标识符和值之间的关系被建立时可能不会被立即修改。创建和初始化<strong>不可变绑定</strong>是截然不同的步骤，所以这种绑定是有可能是处在初始化或者未初始化状态下的。<strong>声明环境记录</strong>除了支持环境记录的抽象规范方法，还支持表 18 中的方法。</p>
+<p><strong>声明环境记录</strong>的具体规范方法的行为由以下算法定义。</p>
+<h2 id="10-2-1-2-对象环境记录"><a href="#10-2-1-2-对象环境记录" class="headerlink" title="10.2.1.2 对象环境记录"></a>10.2.1.2 对象环境记录</h2><p>每个<strong>对象环境记录</strong>都与一个被称为绑定对象的对象相关联。<strong>对象环境记录</strong>把它的绑定对象的属性名与一系列直接对应的标识符名称一一绑定。不符合<code>IdentifierName</code>的属性名不会包含在该系列中。自有的属性和继承的属性会无视<code>[[Enumerable]]</code>属性的设置包含在该系列中。因为对象上的属性可以动态地被添加或者被删除，<strong>对象环境记录</strong>绑定的这一系列标识符可能会因为有着添加或者删除属性的任意操作的副作用而被隐蔽地修改。任何作为上述副作用的结果而被创建的绑定都会被视为可变绑定，即使这个属性的<code>Writable</code>属性值为<code>false</code>。在对象环境记录中不存在不可变的绑定。</p>
+<p><strong>对象环境记录</strong>可以被配置为在被函数调用时提供它们的绑定对象作为一个隐式的<code>this</code>的值。这个能力被用于明确包含了绑定的 With 语句的行为。这个能力被每个对象环境记录中的一个名为<code>provideThis</code>的布尔值控制。默认情况下，这个值是<code>false</code>。</p>
+<p>对象环境记录的具体规范方法行为被以下的算法定义。</p>
+<h2 id="10-2-3-全局环境"><a href="#10-2-3-全局环境" class="headerlink" title="10.2.3 全局环境"></a>10.2.3 全局环境</h2><p><strong>全局环境</strong>是一个在任意的 ECMAScript 代码被执行前就创建了的特殊词法环境。全局环境的词法环境记录是一个绑定了全局对象的对象环境记录。全局环境的外部环境引用为<code>null</code>。</p>
+<p>当 ECMAScript 代码被执行后，附加的属性可能会被添加到全局对象，并且原始的属性可能会被修改。</p>
+
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://ssrkaze.github.io/posts/1980503079/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="自留地">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
           
-            <a href="/posts/1980503079/" class="post-title-link" itemprop="url">散装自译ECMA262(ES6)</a>
-        </h2>
-
-        <div class="post-meta">
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-28 18:38:51" itemprop="dateModified" datetime="2020-11-28T18:38:51+08:00">2020-11-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%87%AA%E5%A8%B1%E8%87%AA%E4%B9%90/" itemprop="url" rel="index"><span itemprop="name">自娱自乐</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
-            </span><br>
-          
-          <span class="post-meta-item">
-              <a href="/tags/ECMA/" rel="tag"><i class="fa fa-tag"></i> ECMA</a>
-              <a href="/tags/JavaScript/" rel="tag"><i class="fa fa-tag"></i> JavaScript</a>
-          </span>
 
         
 
@@ -328,162 +279,16 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/posts/763779422/" rel="prev" title="散装自译ECMA262(中英对照)">
-      <i class="fa fa-chevron-left"></i> 散装自译ECMA262(中英对照)
+    <a href="/posts/1980503079/" rel="prev" title="散装自译ECMA262(ES6)">
+      <i class="fa fa-chevron-left"></i> 散装自译ECMA262(ES6)
     </a></div>
-      <div class="post-nav-item">
-    <a href="/posts/1562462180/" rel="next" title="散装自译ECMA262(ES5)">
-      散装自译ECMA262(ES5) <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="一些说明"><a href="#一些说明" class="headerlink" title="一些说明"></a>一些说明</h1><ol>
-<li>本文档是 散装自译 ECMA262(中英对照) 中 ES6 相关部分的整合，只保留中文，只为优化阅读体验，内容结构完全一致。</li>
-<li>可能还是会比较难理解，请多多担待。</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/1980503079/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://ssrkaze.github.io/posts/763779422/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="自留地">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/posts/763779422/" class="post-title-link" itemprop="url">散装自译ECMA262(中英对照)</a>
-        </h2>
-
-        <div class="post-meta">
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-28 18:38:44" itemprop="dateModified" datetime="2020-11-28T18:38:44+08:00">2020-11-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%87%AA%E5%A8%B1%E8%87%AA%E4%B9%90/" itemprop="url" rel="index"><span itemprop="name">自娱自乐</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>19k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>31 分钟</span>
-            </span><br>
-          
-          <span class="post-meta-item">
-              <a href="/tags/ECMA/" rel="tag"><i class="fa fa-tag"></i> ECMA</a>
-              <a href="/tags/JavaScript/" rel="tag"><i class="fa fa-tag"></i> JavaScript</a>
-          </span>
-
-        
-
-
-        
-    <div class="post-nav">
       <div class="post-nav-item"></div>
-      <div class="post-nav-item">
-    <a href="/posts/1980503079/" rel="next" title="散装自译ECMA262(ES6)">
-      散装自译ECMA262(ES6) <i class="fa fa-chevron-right"></i>
-    </a></div>
     </div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="一些说明"><a href="#一些说明" class="headerlink" title="一些说明"></a>一些说明</h1><ol>
-<li>翻译自 <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/5.1/index.html">Standard ECMA-262, 5.1 Edition, ECMAScript® Language Specification</a></li>
-<li>翻译自 <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html">Standard ECMA-262, 6th Edition, ECMAScript® 2015 Language Specification</a></li>
-<li>部分术语的翻译参考自 <a target="_blank" rel="noopener" href="https://www.termonline.cn/">术语在线</a>、<a target="_blank" rel="noopener" href="https://github.com/docschina/ecma262/issues/59">ECMAScript® 语言规范中文翻译工作中英词汇对照表</a>，部分术语翻译出自理解，仅供自娱自乐</li>
-<li>之所以翻译两份标准，是因为 ES6 相对 ES5 有着巨大的变化。现行的许多资料既有 ES5 的。也有 ES6 的，为了对照方便，就一起翻译了。</li>
-<li>由于原文本身晦涩难明，所以译文也不可避免地出现了一些长难句。后续每一阶段的结束，我都会撰写一篇文章用于梳理。</li>
-<li>另有两份文档分别是本文档中文部分针对 ES5、ES6 的提取，可能会对阅读理解有所帮助。</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/763779422/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
-  
-
-
   
 
 
@@ -536,6 +341,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E8%AF%B4%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">一些说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%8D%E6%B3%95%E7%8E%AF%E5%A2%83%E5%92%8C%E7%8E%AF%E5%A2%83%E8%AE%B0%E5%BD%95"><span class="nav-number">2.</span> <span class="nav-text">词法环境和环境记录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#8-1-1-%E8%AF%8D%E6%B3%95%E7%8E%AF%E5%A2%83%E5%92%8C%E7%8E%AF%E5%A2%83%E8%AE%B0%E5%BD%95%E8%A7%84%E8%8C%83%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.1.</span> <span class="nav-text">8.1.1 词法环境和环境记录规范类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-2-%E8%AF%8D%E6%B3%95%E7%8E%AF%E5%A2%83"><span class="nav-number">2.2.</span> <span class="nav-text">10.2 词法环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-2-1-%E7%8E%AF%E5%A2%83%E8%AE%B0%E5%BD%95"><span class="nav-number">2.3.</span> <span class="nav-text">10.2.1 环境记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-2-1-1-%E5%A3%B0%E6%98%8E%E7%8E%AF%E5%A2%83%E8%AE%B0%E5%BD%95"><span class="nav-number">2.4.</span> <span class="nav-text">10.2.1.1 声明环境记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-2-1-2-%E5%AF%B9%E8%B1%A1%E7%8E%AF%E5%A2%83%E8%AE%B0%E5%BD%95"><span class="nav-number">2.5.</span> <span class="nav-text">10.2.1.2 对象环境记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-2-3-%E5%85%A8%E5%B1%80%E7%8E%AF%E5%A2%83"><span class="nav-number">2.6.</span> <span class="nav-text">10.2.3 全局环境</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
