@@ -22,27 +22,31 @@
     var CONFIG = {"hostname":"ssrkaze.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
+  <meta name="description" content="前言JavaScript 中的闭包是所有学习这门语言的人绕不开的话题。虽然网上已经有很多解说的文章了，但是我还是觉得有必要写写自己的认知。这不仅是对自己学习的一个总结，也是一个梳理知识的机会。事实上，这篇文章在发出去前已经经历了许多次的修改，也确实帮助我把之前忽视的一些细节重新地捡起来了。 什么是闭包闭包一直缺乏一个官方的定义，这也是争议点比较大的部分。在不同的地方，对闭包有着不同的定义。 比如">
+<meta property="og:type" content="article">
 <meta property="og:title" content="自留地">
-<meta property="og:url" content="https://ssrkaze.github.io/">
+<meta property="og:url" content="https://ssrkaze.github.io/posts/0/">
 <meta property="og:site_name" content="自留地">
+<meta property="og:description" content="前言JavaScript 中的闭包是所有学习这门语言的人绕不开的话题。虽然网上已经有很多解说的文章了，但是我还是觉得有必要写写自己的认知。这不仅是对自己学习的一个总结，也是一个梳理知识的机会。事实上，这篇文章在发出去前已经经历了许多次的修改，也确实帮助我把之前忽视的一些细节重新地捡起来了。 什么是闭包闭包一直缺乏一个官方的定义，这也是争议点比较大的部分。在不同的地方，对闭包有着不同的定义。 比如">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-01-28T08:16:41.543Z">
+<meta property="article:modified_time" content="2021-01-28T08:16:03.584Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://ssrkaze.github.io/">
+<link rel="canonical" href="https://ssrkaze.github.io/posts/0/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>自留地</title>
+  <title> | 自留地</title>
   
 
 
@@ -153,9 +157,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -171,10 +176,9 @@
       <meta itemprop="name" content="自留地">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
+        <h1 class="post-title" itemprop="name headline">
           
-            <a href="/posts/0/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
+        </h1>
 
         <div class="post-meta">
               <span class="post-meta-item">
@@ -222,7 +226,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>JavaScript 中的闭包是所有学习这门语言的人绕不开的话题。虽然网上已经有很多解说的文章了，但是我还是觉得有必要写写自己的认知。这不仅是对自己学习的一个总结，也是一个梳理知识的机会。事实上，这篇文章在发出去前已经经历了许多次的修改，也确实帮助我把之前忽视的一些细节重新地捡起来了。</p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>JavaScript 中的闭包是所有学习这门语言的人绕不开的话题。虽然网上已经有很多解说的文章了，但是我还是觉得有必要写写自己的认知。这不仅是对自己学习的一个总结，也是一个梳理知识的机会。事实上，这篇文章在发出去前已经经历了许多次的修改，也确实帮助我把之前忽视的一些细节重新地捡起来了。</p>
 <h1 id="什么是闭包"><a href="#什么是闭包" class="headerlink" title="什么是闭包"></a>什么是闭包</h1><p>闭包一直缺乏一个官方的定义，这也是争议点比较大的部分。在不同的地方，对闭包有着不同的定义。</p>
 <p>比如 MDN 上是这样描述的：</p>
 <blockquote>
@@ -289,79 +293,13 @@
 <p>从技术角度讲，所有的 JavaScript 函数都是闭包。</p>
 </blockquote>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://ssrkaze.github.io/posts/1980503079/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="自留地">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/posts/1980503079/" class="post-title-link" itemprop="url">散装自译ECMA262(ES6)</a>
-        </h2>
-
-        <div class="post-meta">
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-28 18:48:00" itemprop="dateModified" datetime="2020-11-28T18:48:00+08:00">2020-11-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%87%AA%E5%A8%B1%E8%87%AA%E4%B9%90/" itemprop="url" rel="index"><span itemprop="name">自娱自乐</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
-            </span><br>
-          
-          <span class="post-meta-item">
-              <a href="/tags/ECMA/" rel="tag"><i class="fa fa-tag"></i> ECMA</a>
-              <a href="/tags/JavaScript/" rel="tag"><i class="fa fa-tag"></i> JavaScript</a>
-          </span>
 
         
 
@@ -369,272 +307,16 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/posts/1562462180/" rel="prev" title="散装自译ECMA262(ES5)">
-      <i class="fa fa-chevron-left"></i> 散装自译ECMA262(ES5)
+    <a href="/posts/1980503079/" rel="prev" title="散装自译ECMA262(ES6)">
+      <i class="fa fa-chevron-left"></i> 散装自译ECMA262(ES6)
     </a></div>
-      <div class="post-nav-item">
-    <a href="/posts/0/" rel="next" title="">
-       <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="一些说明"><a href="#一些说明" class="headerlink" title="一些说明"></a>一些说明</h1><ol>
-<li>本文档是 <a href="https://ssrkaze.github.io/posts/763779422/">散装自译ECMA262(中英对照)</a> 中 ES6 相关部分的整合，只保留中文，只为优化阅读体验，内容结构完全一致。</li>
-<li>可能还是会比较难理解，请多多担待。</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/1980503079/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://ssrkaze.github.io/posts/1562462180/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="自留地">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/posts/1562462180/" class="post-title-link" itemprop="url">散装自译ECMA262(ES5)</a>
-        </h2>
-
-        <div class="post-meta">
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-28 18:48:25" itemprop="dateModified" datetime="2020-11-28T18:48:25+08:00">2020-11-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%87%AA%E5%A8%B1%E8%87%AA%E4%B9%90/" itemprop="url" rel="index"><span itemprop="name">自娱自乐</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.8k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span><br>
-          
-          <span class="post-meta-item">
-              <a href="/tags/ECMA/" rel="tag"><i class="fa fa-tag"></i> ECMA</a>
-              <a href="/tags/JavaScript/" rel="tag"><i class="fa fa-tag"></i> JavaScript</a>
-          </span>
-
-        
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/posts/763779422/" rel="prev" title="散装自译ECMA262(中英对照)">
-      <i class="fa fa-chevron-left"></i> 散装自译ECMA262(中英对照)
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/posts/1980503079/" rel="next" title="散装自译ECMA262(ES6)">
-      散装自译ECMA262(ES6) <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="一些说明"><a href="#一些说明" class="headerlink" title="一些说明"></a>一些说明</h1><ol>
-<li>本文档是 <a href="https://ssrkaze.github.io/posts/763779422/">散装自译ECMA262(中英对照)</a> 中 ES5 相关部分的整合，只保留中文，只为优化阅读体验，内容结构完全一致。</li>
-<li>可能还是会比较难理解，请多多担待。</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/1562462180/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://ssrkaze.github.io/posts/763779422/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="自留地">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/posts/763779422/" class="post-title-link" itemprop="url">散装自译ECMA262(中英对照)</a>
-        </h2>
-
-        <div class="post-meta">
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-28 18:39:00" itemprop="dateModified" datetime="2020-11-28T18:39:00+08:00">2020-11-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%87%AA%E5%A8%B1%E8%87%AA%E4%B9%90/" itemprop="url" rel="index"><span itemprop="name">自娱自乐</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>19k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>31 分钟</span>
-            </span><br>
-          
-          <span class="post-meta-item">
-              <a href="/tags/ECMA/" rel="tag"><i class="fa fa-tag"></i> ECMA</a>
-              <a href="/tags/JavaScript/" rel="tag"><i class="fa fa-tag"></i> JavaScript</a>
-          </span>
-
-        
-
-
-        
-    <div class="post-nav">
       <div class="post-nav-item"></div>
-      <div class="post-nav-item">
-    <a href="/posts/1562462180/" rel="next" title="散装自译ECMA262(ES5)">
-      散装自译ECMA262(ES5) <i class="fa fa-chevron-right"></i>
-    </a></div>
     </div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="一些说明"><a href="#一些说明" class="headerlink" title="一些说明"></a>一些说明</h1><ol>
-<li>翻译自 <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/5.1/index.html">Standard ECMA-262, 5.1 Edition, ECMAScript® Language Specification</a></li>
-<li>翻译自 <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/6.0/index.html">Standard ECMA-262, 6th Edition, ECMAScript® 2015 Language Specification</a></li>
-<li>部分术语的翻译参考自 <a target="_blank" rel="noopener" href="https://www.termonline.cn/">术语在线</a>、<a target="_blank" rel="noopener" href="https://github.com/docschina/ecma262/issues/59">ECMAScript® 语言规范中文翻译工作中英词汇对照表</a>，部分术语翻译出自理解，仅供自娱自乐</li>
-<li>之所以翻译两份标准，是因为 ES6 相对 ES5 有着巨大的变化。现行的许多资料既有 ES5 的。也有 ES6 的，为了对照方便，就一起翻译了。</li>
-<li>由于原文本身晦涩难明，所以译文也不可避免地出现了一些长难句。后续每一阶段的结束，我都会撰写一篇文章用于梳理。</li>
-<li>另有两份文档分别是本文档中文部分针对 ES5、ES6 的提取，可能会对阅读理解有所帮助。</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/763779422/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
-  
-
-
   
 
 
@@ -687,6 +369,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%97%AD%E5%8C%85"><span class="nav-number">2.</span> <span class="nav-text">什么是闭包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%8D%E6%B3%95%E7%8E%AF%E5%A2%83"><span class="nav-number">3.</span> <span class="nav-text">词法环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AD%E5%8C%85"><span class="nav-number">5.</span> <span class="nav-text">闭包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%97%A0%E5%A4%84%E4%B8%8D%E5%9C%A8%E7%9A%84%E9%97%AD%E5%8C%85"><span class="nav-number">6.</span> <span class="nav-text">无处不在的闭包</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
